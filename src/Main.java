@@ -1,13 +1,8 @@
-import service.*;
-import service.InformationProcessing;
 import service.helpers.ConnectionHelper;
-import service.helpers.Login;
-import service.helpers.PrepareTable;
+import service.helpers.Views;
 
 import java.sql.Connection;
 import java.util.Scanner;
-
-import static java.lang.System.exit;
 
 
 public class Main {
@@ -38,7 +33,7 @@ public class Main {
 
                     System.out.println("Enter your choice: \t");
                     int choice = scanner.nextInt();
-                    Login l = new Login();
+                    Views l = new Views();
                     switch (choice){
                         case 1:
                             staff = 1;

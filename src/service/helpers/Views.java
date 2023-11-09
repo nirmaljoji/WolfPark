@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 import static java.lang.System.exit;
 
-public class Login {
+public class Views {
 
     public void AdminView(Connection connection) {
 

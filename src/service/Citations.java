@@ -28,8 +28,44 @@
 //        True signifies that vehicle is found and deleted, False if no record was found.
 //        If a permit exists then the permit is deleted as well.
 
+package service;
 
-public class GenerateMaintainCitations {
+import java.sql.Connection;
+import java.util.Scanner;
+
+public class Citations {
+    Scanner scanner = new Scanner(System.in);
+    ResultSetService resultSetService = new ResultSetService();
 
 
+    public void run(Connection conn){
+
+        try{
+            while (true){
+                System.out.println("\nGENERATE AND MAINTAIN CITATIONS:");
+                System.out.println("1. Edit here");
+                System.out.println("2. Return to Main Menu\n");
+                System.out.println("Enter you choice: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Do you opertain here (dont write all the code in the block, make use of function calls, use resultset to help format output");
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+                if(choice == 2) {
+                    break;
+                }
+            }
+        }catch( Exception ex){
+            System.out.println("Exception: "+ ex.getMessage());
+
+        }
+
+    }
 }

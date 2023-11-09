@@ -67,8 +67,47 @@
 //        payCitationFee(citationNumber)
 //        returns True if payment status has been successfully updated to  paid, else False.
 
+package service;
+
+import java.sql.Connection;
+import java.util.Scanner;
 
 public class InformationProcessing {
 
+    Scanner scanner = new Scanner(System.in);
+    ResultSetService resultSetService = new ResultSetService();
 
+
+    public void run(Connection conn){
+
+        try{
+
+            while (true){
+                System.out.println("\nINFORMATION PROCESSING:");
+                System.out.println("1. Edit here");
+                System.out.println("2. Return to Main Menu\n");
+                System.out.println("Enter you choice: ");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (choice) {
+                    case 1:
+                        System.out.println("Do you opertain here (dont write all the code in the block, make use of function calls, use resultset to help format output");
+                        break;
+                    case 2:
+                        return;
+                    default:
+                        System.out.println("Invalid Input");
+                }
+                if(choice == 2) {
+                    break;
+                }
+            }
+
+        }catch( Exception ex){
+            System.out.println("Exception: "+ ex.getMessage());
+
+        }
+
+    }
 }

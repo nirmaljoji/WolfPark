@@ -6,9 +6,9 @@ Similar to this: </br>
 Add the following code to the repository:
 
 ```
-public final class Constants {
+public final class constants {
 
-    private Constants() {
+    private constants() {
         // restrict instantiation
     }
 

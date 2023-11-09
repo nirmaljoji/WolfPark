@@ -1,31 +1,18 @@
+package service;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class PrepareTable {
-    static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/"+Constants.UnityID;
 
-    public static void createTable(){
+    public static void createTable(Connection conn){
         try {
 
-            // Load the driver. This creates an instance of the driver
-            // and calls the registerDriver method to make MySql Thin
-            // driver, available to clients.
-
-            Class.forName("org.mariadb.jdbc.Driver");
-
-            String user = Constants.UnityID;
-            String passwd = Constants.SqlPassword;
-
-            Connection conn = null;
             Statement stmt = null;
-            ResultSet rs = null;
-
             try {
 
-
-                conn = DriverManager.getConnection(jdbcURL, user, passwd);
                 stmt = conn.createStatement();
 
                 stmt.addBatch("SET FOREIGN_KEY_CHECKS=0;");
@@ -61,7 +48,7 @@ public class PrepareTable {
                 stmt.addBatch( " CREATE TABLE Appeals ( DriverID VARCHAR(10) NOT NULL, CitationNo VARCHAR(10) NOT NULL, AppealStatus VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID), FOREIGN KEY (CitationNo) REFERENCES Citation(CitationNo), CHECK (AppealStatus in ('Requested', 'Rejected', 'Accepted')) );");
 
                 stmt.executeBatch();
-
+                System.out.print("All required tables created.....");
 //                while (rs.next()) {
 //                    String s = rs.getString("COF_NAME");
 //                    float n = rs.getFloat("PRICE");
@@ -69,35 +56,20 @@ public class PrepareTable {
 //                }
 
             } finally {
-                //close(rs);
-                close(stmt);
-                close(conn);
+                System.out.print("All required tables created.....");
             }
         } catch(Throwable oops) {
             oops.printStackTrace();
         }
     }
 
-    public static void insertData(){
+    public static void insertData(Connection conn){
         try {
 
-            // Load the driver. This creates an instance of the driver
-            // and calls the registerDriver method to make MySql Thin
-            // driver, available to clients.
-
-            Class.forName("org.mariadb.jdbc.Driver");
-
-            String user = Constants.UnityID;
-            String passwd = Constants.SqlPassword;
-
-            Connection conn = null;
             Statement stmt = null;
-            ResultSet rs = null;
 
             try {
 
-
-                conn = DriverManager.getConnection(jdbcURL, user, passwd);
                 stmt = conn.createStatement();
 
                 stmt.addBatch("INSERT INTO Staff (StaffID, Role) VALUES (1, 'Admin'), (2, 'Security');");
@@ -115,38 +87,13 @@ public class PrepareTable {
                 stmt.addBatch("INSERT INTO PermitLocation (PermitID, PLName, ZoneID, SpaceNo) VALUES ('VSBF1C', 'Dan Allen Parking Deck', 'V', 1), ('EJC1R', 'Partners Way Deck', 'A', 1), ('EJH2C', 'Partners Way Deck', 'A', 2), ('EIG3C', 'Partners Way Deck', 'A', 3), ('SST1R', 'Poulton Deck', 'AS', 1), ('VCX1SE', 'Dan Allen Parking Deck', 'V', 2);");
                 stmt.executeBatch();
 
-//
-//
-//                while (rs.next()) {
-//                    String s = rs.getString("COF_NAME");
-//                    float n = rs.getFloat("PRICE");
-//                    System.out.println(s + "  " + n);
-//                }
 
             } finally {
-                //close(rs);
-                close(stmt);
-                close(conn);
+                System.out.print("Tables have been populated.....");
             }
         } catch(Throwable oops) {
             oops.printStackTrace();
         }
     }
-    static void close(Connection conn) {
-        if(conn != null) {
-            try { conn.close(); } catch(Throwable whatever) {}
-        }
-    }
 
-    static void close(Statement st) {
-        if(st != null) {
-            try { st.close(); } catch(Throwable whatever) {}
-        }
-    }
-
-    static void close(ResultSet rs) {
-        if(rs != null) {
-            try { rs.close(); } catch(Throwable whatever) {}
-        }
-    }
 }

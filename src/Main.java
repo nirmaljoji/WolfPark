@@ -1,5 +1,7 @@
 import service.*;
 import service.InformationProcessing;
+import service.helpers.ConnectionHelper;
+import service.helpers.PrepareTable;
 
 import java.sql.Connection;
 import java.util.Scanner;

@@ -69,6 +69,8 @@
 
 package service;
 
+import service.helpers.ResultSetService;
+
 import java.sql.Connection;
 import java.util.Scanner;
 

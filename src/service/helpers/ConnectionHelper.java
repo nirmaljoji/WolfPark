@@ -1,4 +1,4 @@
-package service;
+package service.helpers;
 import config.DatabaseConfig;
 
 import java.sql.Connection;

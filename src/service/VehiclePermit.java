@@ -54,7 +54,7 @@ public class VehiclePermit {
 
                 switch (choice) {
                     case 1:
-                        System.out.println("Do you opertain here (dont write all the code in the block, make use of function calls, use resultset to help format output");
+                        createPermit(conn);
                         break;
                     case 2:
                         return;
@@ -69,6 +69,38 @@ public class VehiclePermit {
             System.out.println("Exception: "+ ex.getMessage());
 
         }
+
+    }
+
+    public void createPermit(Connection conn){
+
+        try{
+            try{
+                System.out.println("Enter information for (new) Permit:");
+                // createPermit (startDate, expirationDate, expirationTime, permitType, driverID!, licenseNo, PLName, zoneID, SpaceNo, StaffID)
+                System.out.print("Enter driver ID");
+                final String driverID = scanner.nextLine();
+
+//                System.out.print("Enter License No.");
+//                final String driverID = scanner.nextLine();
+//
+//                System.out.print("Enter driverID");
+//                final String driverID = scanner.nextLine();
+//
+//                System.out.print("Enter driverID");
+//                final String driverID = scanner.nextLine();
+
+
+
+            }finally{
+                System.out.println("New Permit created");
+            }
+
+        }catch (Exception ex){
+            System.out.println("Exception:" + ex.getMessage());
+        }
+
+
 
     }
 }

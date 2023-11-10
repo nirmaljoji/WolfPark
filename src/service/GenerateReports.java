@@ -168,7 +168,7 @@ public class GenerateReports {
     private boolean getEmployeesWithPermitsInZone(Connection conn) {
         try {
             System.out.println("Zones in the database:");
-            getZones(conn);
+            resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Zone;");
 
             System.out.println("Enter Zone ID (A,B,C,D,AS,BS,CS,DS,V):");
             final String zoneID = scanner.nextLine();
@@ -191,7 +191,7 @@ public class GenerateReports {
     private boolean getPermitInformation(Connection conn) {
         try {
             System.out.println("Drivers in the database:");
-            resultSetService.runQueryAndPrintOutput(conn, "SELECT * from Driver;");
+            resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Driver;");
 
             System.out.println("Enter Driver ID:");
             final String driverID = scanner.nextLine();
@@ -214,10 +214,10 @@ public class GenerateReports {
     private boolean getAvailableSpace(Connection conn) {
         try {
             System.out.println("Parking Lots in the database:");
-            resultSetService.runQueryAndPrintOutput(conn, "SELECT * from ParkingLot;");
+            resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from ParkingLot;");
 
             System.out.println("Zones in the database:");
-            getZones(conn);
+            resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Zone;");
 
             System.out.println("Enter Parking Lot:");
             final String parkingLot = scanner.nextLine();

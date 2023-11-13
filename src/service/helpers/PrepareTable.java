@@ -21,7 +21,7 @@ public class PrepareTable {
 
                 stmt.addBatch(" CREATE TABLE Staff( StaffID INT PRIMARY KEY, Role VARCHAR(32), CHECK (Role in ('Admin', 'Security')) );");
 
-                stmt.addBatch(" CREATE TABLE Driver ( DriverID VARCHAR(10) PRIMARY KEY, DriverName VARCHAR(255) NOT NULL, Status VARCHAR(1) CHECK (Status IN ('S', 'E', 'V')), CHECK ( (Status = 'V' AND CHAR_LENGTH(CONVERT(DriverID, CHAR(10))) = 10) ) );");
+                stmt.addBatch(" CREATE TABLE Driver ( DriverID VARCHAR(10) PRIMARY KEY, DriverName VARCHAR(255) NOT NULL, Status VARCHAR(1) CHECK (Status IN ('S', 'E', 'V')),CHECK ((Status IN ('S', 'E')) OR (Status = 'V' AND CHAR_LENGTH(DriverID) = 10)));");
 
                 stmt.addBatch(" CREATE TABLE VehicleModelManufacturer ( Model VARCHAR(255) PRIMARY KEY, Manufacturer VARCHAR(255) );");
 

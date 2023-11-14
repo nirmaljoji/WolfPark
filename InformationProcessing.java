@@ -136,7 +136,7 @@ public class InformationProcessing {
                            int id = resultSet.getInt("driverId");
                            String name = resultSet.getString("driverName");
                            String status1 = resultSet.getString("Status");
-                           System.out.println("Driver ID: " + id + ", Name: " + name + ", Status: " + status1);
+                          // System.out.println("Driver ID: " + id + ", Name: " + name + ", Status: " + status1);
                        }
                    }
             }
@@ -162,7 +162,7 @@ public void updateDriverInformation(Connection conn){
                            int id = resultSet.getInt("driverId");
                            String name = resultSet.getString("driverName");
                            String status1 = resultSet.getString("Status");
-                           System.out.println("Driver ID: " + id + ", Name: " + name + ", Status: " + status1);
+                           // System.out.println("Driver ID: " + id + ", Name: " + name + ", Status: " + status1);
                    }
                 }
            
@@ -184,7 +184,7 @@ public void deleteDriverInformation(Connection conn){
                 String query = "DELETE FROM Driver WHERE DriverID = '+driverId+' ;";
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
-                		System.out.println("Driver ID" + driverId + "is being deleted.");
+                		//System.out.println("Driver ID" + driverId + "is being deleted.");
                 }
 
            }
@@ -215,7 +215,7 @@ public void deleteDriverInformation(Connection conn){
                 		String plName = resultSet.getString("parkingLotName");
                 		String name = resultSet.getString("staffId");
                 		String addr = resultSet.getString("address");
-                		System.out.println("Parking Lot Name : " + plName + ", Staff ID : " + name + ", Address : " + addr);
+                		//System.out.println("Parking Lot Name : " + plName + ", Staff ID : " + name + ", Address : " + addr);
            }
         }
      }
@@ -243,7 +243,7 @@ public void deleteDriverInformation(Connection conn){
                     		String plName = resultSet.getString("parkingLotName");
                     		String name = resultSet.getString("staffId");
                     		String addr = resultSet.getString("address");
-                    		System.out.println("Parking Lot Name : " + plName + ", Staff ID : " + name + ", Address : " + addr);
+                    		//System.out.println("Parking Lot Name : " + plName + ", Staff ID : " + name + ", Address : " + addr);
                }
             }
            }
@@ -264,7 +264,7 @@ public void deleteDriverInformation(Connection conn){
                 String query ="DELETE FROM ParkingLot WHERE PLName = '+parkingLotName+';";
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
-                		System.out.println("Parking Lot" + parkingLotName + "is being deleted.");
+                		//System.out.println("Parking Lot" + parkingLotName + "is being deleted.");
                 }
             }
             finally{
@@ -289,7 +289,7 @@ public void deleteDriverInformation(Connection conn){
                        while (resultSet.next()) {
                            String id = resultSet.getString("zoneID");
                            String plName= resultSet.getString("parkingLotName");
-                           System.out.println("Parking Lot Name : " + plName + ", Zone ID : " + id);
+                          // System.out.println("Parking Lot Name : " + plName + ", Zone ID : " + id);
                        }
                    }
             }
@@ -317,7 +317,7 @@ public void deleteDriverInformation(Connection conn){
                        while (resultSet.next()) {
                            String id = resultSet.getString("zoneID");
                            String plName= resultSet.getString("parkingLotName");
-                           System.out.println("Parking Lot Name : " + plName + ", Zone ID : " + id);
+                          // System.out.println("Parking Lot Name : " + plName + ", Zone ID : " + id);
                        }
                    }
             }
@@ -341,7 +341,7 @@ public void deleteDriverInformation(Connection conn){
                 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
-                		System.out.println("Zone" + zoneId + "is being deleted.");
+                		//System.out.println("Zone" + zoneId + "is being deleted.");
                 }
             }
             finally{
@@ -371,7 +371,7 @@ public void deleteDriverInformation(Connection conn){
                     		String plName = resultSet.getString("parkingLotName");
                     		String spaceNo = resultSet.getString("spaceNumber");
                             String space_type = resultSet.getString("spaceType");
-                    		System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
+                    		//System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
                }
                         }
             }
@@ -402,7 +402,7 @@ public void deleteDriverInformation(Connection conn){
                     		String plName = resultSet.getString("parkingLotName");
                     		String spaceNo = resultSet.getString("spaceNumber");
                             String space_type = resultSet.getString("spaceType");
-                    		System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
+                    		//System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
                }
                         }
             }
@@ -428,7 +428,7 @@ public void deleteDriverInformation(Connection conn){
         
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
-                		System.out.println("Space" + spaceNumber + "is being deleted.");
+                		//System.out.println("Space" + spaceNumber + "is being deleted.");
                 }
                 
             }
@@ -476,7 +476,7 @@ public void deleteDriverInformation(Connection conn){
                     	while (resultSet.next()) {
                     		String plName = resultSet.getString("parkingLotName");
                     		String zone_id = resultSet.getString("zoneId");
-                    		System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
+                    		//System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
                }
                         }
 
@@ -509,7 +509,7 @@ public void deleteDriverInformation(Connection conn){
                     	while (resultSet.next()) {
                     		String plName = resultSet.getString("parkingLotName");
                     		String zone_id = resultSet.getString("zoneId");
-                    		System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
+                    		//System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
                }
                         }
 
@@ -533,7 +533,7 @@ public void deleteDriverInformation(Connection conn){
                 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
-                		System.out.println("Permit Info" + permitId + "is being deleted.");
+                		//System.out.println("Permit Info" + permitId + "is being deleted.");
                 }
 
             }
@@ -560,7 +560,7 @@ public void deleteDriverInformation(Connection conn){
                     	while (resultSet.next()) {
                     		String plName = resultSet.getString("parkingLotName");
                     		String zone_id = resultSet.getString("zoneId");
-                    		System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
+                    		//System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
                }
                         }
 
@@ -594,7 +594,7 @@ public void deleteDriverInformation(Connection conn){
                     		String zone_id = resultSet.getString("zoneId");
                             String spaceNo = resultSet.getString("spaceNumber");
                             String space_type = resultSet.getString("spaceType");
-                    		System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id + ",Space Number: " + spaceNo + ", Space Type: " + space_type);
+                    		//System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id + ",Space Number: " + spaceNo + ", Space Type: " + space_type);
                }
                         }
 
@@ -624,7 +624,7 @@ public void deleteDriverInformation(Connection conn){
                     		String dId = resultSet.getString("driverId");
                     		String cNumber= resultSet.getString("citationNumber");
                             String appealStat= resultSet.getString("appealStatus");
-                    		System.out.println("Driver ID : " + dId + ", Citation Number : " + cNumber + ", Appeal Status : " +appealStat);
+                    		//System.out.println("Driver ID : " + dId + ", Citation Number : " + cNumber + ", Appeal Status : " +appealStat);
                         }
                }
 
@@ -651,7 +651,7 @@ public void deleteDriverInformation(Connection conn){
                     	while (resultSet.next()) {
                     		String citation_number = resultSet.getString("citationNumber");
                     		String payment_status = resultSet.getString("paymentStatus");
-                    		System.out.println("Citation Number : " + citation_number + ", Payment Status : " + payment_status );
+                    		//System.out.println("Citation Number : " + citation_number + ", Payment Status : " + payment_status );
                }
                         }
 

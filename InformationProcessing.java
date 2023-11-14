@@ -616,8 +616,8 @@ public void deleteDriverInformation(Connection conn){
                 System.out.println("Enter the citation Number");
                 int citationNumber = sc.nextInt();
                 System.out.println("Enter the appeal status");
-                String appealStatus = sc.nextLine();
-                String query = "IINSERT INTO Appeals (DriverID, CitationNo, AppealStatus) VALUES ('+driverId+', '+citationNumber+', '+appealStatus+');";
+                String appealStatus = "Requested";
+                String query = "INSERT INTO Appeals (DriverID, CitationNo, AppealStatus) VALUES ('+driverId+', '+citationNumber+', '+appealStatus+');";
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
                     	while (resultSet.next()) {

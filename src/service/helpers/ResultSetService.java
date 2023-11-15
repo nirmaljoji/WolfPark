@@ -95,4 +95,55 @@ public class ResultSetService {
         }
     }
 
+    public void runQueryAndPrintOutput2(final Connection connection, final String sqlQuery) {
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            List<String> headerColumns = getHeaderColumns(resultSet);
+
+            if (!resultSet.isBeforeFirst() ) {
+                System.out.println("-----------------");
+                System.out.println("NO DATA");
+                System.out.println("-----------------");
+
+                return;
+            }
+
+            // Print the top border
+            for (int i=0; i<headerColumns.size(); i++) {
+                System.out.print("+---------------------------");
+            }
+            System.out.println("+");
+
+            for (int i=0; i<headerColumns.size(); i++) {
+                System.out.printf("| %-25s ", headerColumns.get(i));
+            }
+            System.out.println("|");
+
+            for (int i=0; i<headerColumns.size(); i++) {
+                System.out.print("+---------------------------");
+            }
+            System.out.println("+");
+
+            while(resultSet.next()) {
+                for(int i=1; i<=headerColumns.size(); i++) {
+                    String columnValue = resultSet.getString(i);
+                    System.out.printf("| %-25s ", columnValue);
+
+                }
+                System.out.println("|");
+            }
+
+            for (int i=0; i<headerColumns.size(); i++) {
+                System.out.print("+---------------------------");
+            }
+            System.out.println("+");
+
+        } catch (Exception e) {
+            System.out.println("Exception Occurred: " + e.getMessage());
+        }
+
+    }
+
 }

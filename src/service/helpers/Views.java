@@ -164,8 +164,8 @@ public class Views {
                         break;
 
                     case 4:
-                        GenerateReports gr = new GenerateReports();
-                        gr.run(connection);
+                    	Citations citation1 = new Citations();
+                    	citation1.run(connection);
                         break;
 
                     case 5:

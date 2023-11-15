@@ -187,16 +187,15 @@ public void deleteDriverInformation(Connection conn){
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
                 		System.out.println("Driver ID" + driverId + "is being deleted.");
-                }
 
            }
             finally{
                 System.out.println("Driver information deleted succesfully");
             }
-        }catch (Exception ex){
+        }catch(Exception ex){
             System.out.println("Exception:" + ex.getMessage());
         }
-    }
+}
 
 
     // check if string can hold the address, cuz address might be long set of chars ;)
@@ -264,7 +263,6 @@ public void deleteDriverInformation(Connection conn){
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
                 		System.out.println("Parking Lot" + parkingLotName + "is being deleted.");
-                }
             }
             finally{
                 System.out.println("Parking Lot details deleted successfully");
@@ -339,7 +337,6 @@ public void deleteDriverInformation(Connection conn){
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery()) {
                 		System.out.println("Zone" + zoneId + "is being deleted.");
-                }
             }
             finally{
                 System.out.println("Zone deleted succesfully");
@@ -425,14 +422,15 @@ public void deleteDriverInformation(Connection conn){
                 		System.out.println("Space" + spaceNumber + "is being deleted.");
                 }
                 
-            }
             finally{
                 System.out.println("Space information deleted succesfully");
             }
         }catch (Exception ex){
             System.out.println("Exception:" + ex.getMessage());
+    
         }
-    }
+  }
+
 
 
     public void deletePermitInformation(Connection conn){
@@ -450,11 +448,11 @@ public void deleteDriverInformation(Connection conn){
                 		System.out.println("Permit Info" + permitId + "is being deleted.");
                 }
 
-            }
             finally{
                 System.out.println("Permit information deleted succesfully");
             }
-        }catch (Exception ex){
+        } 
+            catch(Exception ex){
             System.out.println("Exception:" + ex.getMessage());
         }
     }
@@ -547,49 +545,46 @@ public void deleteDriverInformation(Connection conn){
             System.out.println("Exception:" + ex.getMessage());
         }
     }
+   public void payCitationFees(Connection conn){
+	   return ;SA}
+   }
+    	//try{
+    	//   System.out.println("Enter the citation Number : ");
+    	//   int citationNumber = sc.nextInt();
+    	//    String query1 = "SELECT * FROM Citation where CitationNo = ' " + citationNumber + " ' ;";
+    	//           PreparedStatement statement = conn.prepareStatement(query1);
+	                //           ResultSet resultSet = statement.executeQuery();
+	             
+    	//		resultSetService.viewFromResultSet(resultSet);
+	
+    	//		System.out.println("Do you want to proceed with paying your citation fees? /n 1.Yes /n 2.No /n ");
+    	//		int paywill = sc.nextInt();
+    	//         if (paywill == 1){
+    	//         	String paymentStatus = "Paid";
+    	//         	//         	String query = "UPDATE Citation SET PaymentStatus = '" + paymentStatus + "' WHERE CitationNo = '" + citationNumber + "'";
+    	//         	try (PreparedStatement preparedStatement = conn.prepareStatement(query);
+    	//                 ResultSet resultSet1 = preparedStatement.executeQuery()) {
+    	//              	while (resultSet1.next()) {
+    	//               		String citation_number = resultSet1.getString("citationNumber");
+    	//                		String payment_status = resultSet1.getString("paymentStatus");
+    	//               		//               		System.out.println("Citation Number : " + citation_number + ", Payment Status : " + payment_status );
+    	//               }
+    //           }
+	              
+    //         }
+    //        else {
+    //           
+    //				resultSetService.viewFromResultSet(resultSet);
+	    				//			System.out.println("Your Citation fee is still Unpaid.");
+    //        	
+    //        }
+   
+    //   }
+    //  finally{
+    //              System.out.println("Citation fees paid successfully");
+    //          }
+    //   }catch (Exception ex){
+    //                System.out.println("Exception:" + ex.getMessage()); }
 
-    public void payCitationFees(Connection conn){
-            try{
-                System.out.println("Enter the citation Number : ");
-                int citationNumber = sc.nextInt();
-                
-                String query1 = "SELECT * FROM Citation where CitationNo = ' " + citationNumber + " ' ;";
-                PreparedStatement statement = conn.prepareStatement(query1);
-                ResultSet resultSet = statement.executeQuery();
-             
-				resultSetService.viewFromResultSet(resultSet);
+    //}
 
-				System.out.println("Do you want to proceed with paying your citation fees? /n 1.Yes /n 2.No /n ");
-				int paywill = sc.nextInt();
-				
-                // print citation table columns 
-                // would you like to proceed w payment 
-                // yes -- change 
-                if (paywill == 1){
-                	String paymentStatus = "Paid";
-                	String query = "UPDATE Citation SET PaymentStatus = '" + paymentStatus + "' WHERE CitationNo = '" + citationNumber + "'";
-                	try (PreparedStatement preparedStatement = conn.prepareStatement(query);
-                        ResultSet resultSet1 = preparedStatement.executeQuery()) {
-                    	while (resultSet1.next()) {
-                    		String citation_number = resultSet1.getString("citationNumber");
-                    		String payment_status = resultSet1.getString("paymentStatus");
-                    		System.out.println("Citation Number : " + citation_number + ", Payment Status : " + payment_status );
-                   }
-                
-                }
-                else {
-                 
-    				resultSetService.viewFromResultSet(resultSet);
-    				System.out.println("Your Citation fee is still Unpaid.");
-                	
-                }
-
-            }
-            finally{
-                System.out.println("Citation fees paid successfully");
-            }
-        }catch (Exception ex){
-            System.out.println("Exception:" + ex.getMessage());
-        }
-    }
-}

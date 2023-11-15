@@ -15,7 +15,7 @@ public class InformationProcessing {
     public void run(Connection conn){
 
         try{
-
+	    /* Display list of operations for user to select */
             while (true){
                 System.out.println("\nINFORMATION PROCESSING:");
                 System.out.println("1. Enter Driver Information. \n");
@@ -117,7 +117,9 @@ public class InformationProcessing {
 
     }
 
+
     public void enterDriverInformation(Connection conn){
+	    /* Method to read information of a new Driver entry*/
             try{
                 System.out.println("Enter information for new driver.");
                 System.out.print("Enter driver ID");

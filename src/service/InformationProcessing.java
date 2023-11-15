@@ -9,10 +9,9 @@ public class InformationProcessing {
     Scanner sc = new Scanner(System.in);
     ResultSetService resultSetService = new ResultSetService();
 
+    /* Display list of operations for user to select */
     public void run(Connection conn) {
-
         try {
-            /* Display list of operations for user to select */
             while (true) {
                 System.out.println("\nINFORMATION PROCESSING:");
                 System.out.println("1. Enter Driver Information.");
@@ -113,9 +112,9 @@ public class InformationProcessing {
 
     }
 
-
+    /* Method to read information of a new Driver entry*/
     public void enterDriverInformation(Connection conn) {
-        /* Method to read information of a new Driver entry*/
+
         try {
             System.out.println("Enter information for new driver.");
             System.out.print("Enter driver ID : ");
@@ -133,7 +132,6 @@ public class InformationProcessing {
                 preparedStatement.setString(3, status);
 
                 preparedStatement.executeUpdate();
-            } finally {
                 System.out.println("New Driver created");
             }
         } catch (Exception ex) {
@@ -141,8 +139,8 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to Update Information of an entry in the Driver table*/
     public void updateDriverInformation(Connection conn) {
-        /* Method to Update Information of an entry in the Driver table*/
         try {
             System.out.println("Enter information for updating driver information.");
             System.out.print("Enter driver ID : ");
@@ -159,14 +157,12 @@ public class InformationProcessing {
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
-        } finally {
             System.out.println("Driver details updated");
         }
     }
 
-
+    /* Method to delete an entry from the Driver table*/
     public void deleteDriverInformation(Connection conn) {
-        /* Method to delete an entry from the Driver table*/
         try {
             System.out.println("Enter the Driver ID of the driver you want to delete.");
             System.out.print("Enter driver ID : ");
@@ -177,7 +173,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " rows deleted.");
-            } finally {
                 System.out.println("Driver information deleted succesfully");
             }
         } catch (Exception ex) {
@@ -185,9 +180,8 @@ public class InformationProcessing {
         }
     }
 
-
+    /* Method to add a new Parking Lot to the Parking Lot table*/
     public void enterParkingLotInformation(Connection conn) {
-        /* Method to add a new Parking Lot to the Parking Lot table*/
         try {
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
@@ -204,7 +198,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) inserted.");
-            } finally {
                 System.out.println("Parking Lot details entered successfully");
             }
         } catch (Exception ex) {
@@ -213,8 +206,8 @@ public class InformationProcessing {
 
     }
 
+    /* Method to update an entry in the Parking Lot table*/
     public void updateParkingLotInformation(Connection conn) {
-        /* Method to update an entry in the Parking Lot table*/
         try {
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
@@ -225,19 +218,16 @@ public class InformationProcessing {
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, address);
                 preparedStatement.setString(2, parkingLotName);
-
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) updated.");
-            } finally {
                 System.out.println("Parking Lot details updated successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
         }
     }
-
+    /* Method to delete an entry from Parking Lot table*/
     public void deleteParkingLotInformation(Connection conn) {
-        /* Method to delete an entry from Parking Lot table*/
         try {
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
@@ -248,7 +238,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) deleted.");
-            } finally {
                 System.out.println("Parking Lot details deleted successfully");
             }
         } catch (Exception ex) {
@@ -256,9 +245,9 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to add a new Zone to the Zone table*/
     public void enterZoneInformation(Connection conn) {
         try {
-            /* Method to add a new Zone to the Zone table*/
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -271,7 +260,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) inserted.");
-            } finally {
                 System.out.println("Parking Lot details updated with Zone succesfully");
             }
         } catch (Exception ex) {
@@ -279,9 +267,9 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to update an entry in the  Zone table*/
     public void updateZoneInformation(Connection conn) {
         try {
-            /* Method to update an entry in the  Zone table*/
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -297,7 +285,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) updated.");
-            } finally {
                 System.out.println("Zone details updated succesfully");
             }
         } catch (Exception ex) {
@@ -305,10 +292,11 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to delete an entry in the  Zone table*/
     public void deleteZoneInformation(Connection conn) {
         try {
-            /* Method to delete an entry in the  Zone table*/
-            System.out.println("Enter the Parking Lot Information.");
+
+            System.out.print("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
             System.out.println("Enter the Zone ID : ");
@@ -320,7 +308,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) deleted.");
-            } finally {
                 System.out.println("Zone deleted succesfully");
             }
         } catch (Exception ex) {
@@ -328,9 +315,9 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to add a space  in the Space table*/
     public void enterSpaceInformation(Connection conn) {
         try {
-            /* Method to add a space  in the Space table*/
             System.out.print("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -349,8 +336,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) inserted.");
-
-            } finally {
                 System.out.println("Space information created succesfully");
             }
         } catch (Exception ex) {
@@ -358,9 +343,9 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to update an entry in the  Space table*/
     public void updateSpaceInformation(Connection conn) {
         try {
-            /* Method to update an entry in the  Space table*/
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -379,7 +364,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) updated.");
-            } finally {
                 System.out.println("Space information updated succesfully");
             }
         } catch (Exception ex) {
@@ -387,9 +371,9 @@ public class InformationProcessing {
         }
     }
 
+    /* Method to delete an entry in the  Zone table*/
     public void deleteSpaceInformation(Connection conn) {
         try {
-            /* Method to delete an entry in the  Zone table*/
             System.out.print("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -405,7 +389,6 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println("Space " + spaceNumber + " is being deleted. Rows affected: " + result);
-            } finally {
                 System.out.println("Space information deleted succesfully");
             }
         } catch (Exception ex) {
@@ -414,10 +397,9 @@ public class InformationProcessing {
         }
     }
 
-
+    /* Method to delete an entry in the  Permit table*/
     public void deletePermitInformation(Connection conn) {
         try {
-            /* Method to delete an entry in the  Permit table*/
             System.out.println("Enter the Parking Lot Information.");
             System.out.println("Enter the permit ID : ");
             int permitId = sc.nextInt();
@@ -432,17 +414,15 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println("Permit Info " + permitId + " is being deleted. Rows affected: " + result);
-            } finally {
                 System.out.println("Permit information deleted succesfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
         }
     }
-
+    /* Method to add a zone to a Parking Lot */
     public void assignZone(Connection conn) {
         try {
-            /* Method to add a zone to a Parking Lot */
             System.out.println("Enter the Parking Lot Information.");
             System.out.println("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -456,18 +436,15 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) inserted.");
-            } finally {
                 System.out.println("Assigned Zone");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
         }
     }
-
+    /* Method to add a space to a parking lot */
     public void assignSpaceType(Connection conn) {
         try {
-
-            /* Method to add a space to a parking lot */
             System.out.println("Enter the Parking Lot Information.");
             System.out.println("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
@@ -486,8 +463,6 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceType);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) inserted.");
-            } finally {
                 System.out.println("Assigned space type");
             }
         } catch (Exception ex) {

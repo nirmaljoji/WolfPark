@@ -167,18 +167,48 @@ public class GenerateReports {
     /* Method to get the number of employees having permits for a given parking zone */
     private boolean getEmployeesWithPermitsInZone(Connection conn) {
         try {
-            System.out.println("Zones in the database:");
-            resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Zone;");
+            System.out.println("Choose from the following:\n 1. Get permits for a Zone w.r.t Parking Lot.\n 2. Get all permits for a given Zone.");
+            final int option = scanner.nextInt();
+            scanner.nextLine();
 
-            System.out.println("Enter Zone ID (A,B,C,D,AS,BS,CS,DS,V):");
-            final String zoneID = scanner.nextLine();
+            if (option == 1) {
+                System.out.println("Parking Lots in the database:");
+                resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from ParkingLot;");
 
-            final String sqlQuery = "SELECT COUNT(D.DriverID) AS EmployessWithPermits FROM PermitLocation PL INNER JOIN Permit P ON PL.PermitID = P.PermitID INNER JOIN Vehicle V ON V.LicenseNo = P.LicenseNo  INNER JOIN Driver D ON V.DriverID = D.DriverID WHERE PL.ZoneID = ? AND D.Status = 'E';";
-            PreparedStatement statement = conn.prepareStatement(sqlQuery);
-            statement.setString(1, zoneID);
+                System.out.println("Zones in the database:");
+                resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Zone;");
 
-            ResultSet resultSet = statement.executeQuery();
-            resultSetService.viewFromResultSet(resultSet);
+                System.out.println("Enter Parking Lot:");
+                final String parkingLot = scanner.nextLine();
+
+                System.out.println("Enter Zone ID (A,B,C,D,AS,BS,CS,DS,V):");
+                final String zoneID = scanner.nextLine();
+
+                final String sqlQuery = "SELECT COUNT(D.DriverID) AS EmployessWithPermits FROM PermitLocation PL INNER JOIN Permit P ON PL.PermitID = P.PermitID INNER JOIN Vehicle V ON V.LicenseNo = P.LicenseNo  INNER JOIN Driver D ON V.DriverID = D.DriverID WHERE PL.PLName = ? AND PL.ZoneID = ? AND D.Status = 'E';";
+                PreparedStatement statement = conn.prepareStatement(sqlQuery);
+                statement.setString(1, parkingLot);
+                statement.setString(2, zoneID);
+
+                ResultSet resultSet = statement.executeQuery();
+                resultSetService.viewFromResultSet(resultSet);
+            }
+            else if (option == 2) {
+                System.out.println("Zones in the database:");
+                resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Zone;");
+
+                System.out.println("Enter Zone ID (A,B,C,D,AS,BS,CS,DS,V):");
+                final String zoneID = scanner.nextLine();
+
+                final String sqlQuery = "SELECT COUNT(D.DriverID) AS EmployessWithPermits FROM PermitLocation PL INNER JOIN Permit P ON PL.PermitID = P.PermitID INNER JOIN Vehicle V ON V.LicenseNo = P.LicenseNo  INNER JOIN Driver D ON V.DriverID = D.DriverID WHERE PL.ZoneID = ? AND D.Status = 'E';";
+                PreparedStatement statement = conn.prepareStatement(sqlQuery);
+                statement.setString(1, zoneID);
+
+                ResultSet resultSet = statement.executeQuery();
+                resultSetService.viewFromResultSet(resultSet);
+            }
+            else {
+                System.out.println("Invalid Input. Try Again");
+            }
 
         } catch (Exception ex) {
             System.out.println("Exception: "+ ex.getMessage());

@@ -96,10 +96,10 @@ public class InformationProcessing {
                     	assignSpaceType(conn);
                         break;
                     case 18:
-                    	applyCitation(conn);
+                    	//applyCitation(conn);
                         break;
                     case 19:
-                    	payCitationFees(conn);
+                    	//payCitationFees(conn);
                         break;
                     
                     default:

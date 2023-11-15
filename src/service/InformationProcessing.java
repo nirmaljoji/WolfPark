@@ -130,7 +130,7 @@ public class InformationProcessing {
                 System.out.println("Enter the Status of the driver :");
                 String status = sc.nextLine();
                 
-                String query = "INSERT INTO Driver (DriverID, DriverName, Status) VALUES (" + driverId + ", " + driverName + ", " + status + "');";
+                String query = "INSERT INTO Driver (DriverID, DriverName, Status) VALUES (" + driverId + ", " + driverName + ", " + status + ");";
 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query); 
                         ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -150,6 +150,7 @@ public class InformationProcessing {
     }
 
 public void updateDriverInformation(Connection conn){
+	/* Method to Update Information of an entry in the Driver table*/
         try{
                 System.out.println("Enter information for updating driver information.");
                 System.out.print("Enter driver ID : ");
@@ -178,6 +179,7 @@ public void updateDriverInformation(Connection conn){
 
 
 public void deleteDriverInformation(Connection conn){
+	/* Method to delete an entry from the Driver table*/
             try{
                 System.out.println("Enter the Driver ID of the driver you want to delete.");
                 System.out.print("Enter driver ID : ");
@@ -198,8 +200,8 @@ public void deleteDriverInformation(Connection conn){
 }
 
 
-    // check if string can hold the address, cuz address might be long set of chars ;)
     public void enterParkingLotInformation(Connection conn){
+	    /* Method to add a new Parking Lot to the Parking Lot table*/
             try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
@@ -229,6 +231,7 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void updateParkingLotInformation(Connection conn){
+	     /* Method to update an entry in the Parking Lot table*/
             try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
@@ -254,6 +257,7 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void deleteParkingLotInformation(Connection conn){
+	     /* Method to delete an entry from Parking Lot table*/
             try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
@@ -274,6 +278,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void enterZoneInformation(Connection conn){
             try{
+		 /* Method to add a new Zone to the Zone table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
@@ -299,6 +304,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void updateZoneInformation(Connection conn){
         try{
+		/* Method to update an entry in the  Zone table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
@@ -326,6 +332,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void deleteZoneInformation(Connection conn){
             try{
+		/* Method to delete an entry in the  Zone table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
@@ -348,6 +355,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void enterSpaceInformation(Connection conn){
             try{
+		    /* Method to add a space  in the Space table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
@@ -378,6 +386,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void updateSpaceInformation(Connection conn){
             try{
+		    /* Method to update an entry in the  Space table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
@@ -408,6 +417,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void deleteSpaceInformation(Connection conn){
             try{
+		    /* Method to delete an entry in the  Zone table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
@@ -434,6 +444,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void deletePermitInformation(Connection conn){
         try{
+		/* Method to delete an entry in the  Permit table*/
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the permit ID : ");
                 int permitId = sc.nextInt();
@@ -458,6 +469,7 @@ public void deleteDriverInformation(Connection conn){
 
     public void assignZone(Connection conn){
         try{
+		/* Method to add a zone to a Parking Lot */
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the parking lot name : ");
                 String parkingLotName= sc.nextLine();
@@ -485,6 +497,8 @@ public void deleteDriverInformation(Connection conn){
 
     public void assignSpaceType(Connection conn){
         try{
+	
+		/* Method to add a space to a parking lot */
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the parking lot name : ");
                 String parkingLotName= sc.nextLine();
@@ -518,9 +532,10 @@ public void deleteDriverInformation(Connection conn){
 
     public void applyCitation(Connection conn){
         try{
+		/* Method to add a zone to a Parking Lot */
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the driver ID : ");
-                String driverId= sc.nextString();
+                String driverId= sc.nextLine();
                 System.out.println("Enter the citation Number : ");
                 String citationNumber = sc.nextLine();
                 System.out.println("Enter the appeal status : ");
@@ -545,6 +560,7 @@ public void deleteDriverInformation(Connection conn){
         }
     }
    public void payCitationFees(Connection conn){
+	   /* Method to record payment of Citation fee by the Driver */
 	   return ;}
    }
     	//try{

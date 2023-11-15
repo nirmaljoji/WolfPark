@@ -80,9 +80,10 @@ public class Views {
             while (true) {
                 System.out.println("\n🌟 Choose one of the following options:");
                 System.out.println("1. Generate and Maintain Citations");
-                System.out.println("2. Reset Tables");
-                System.out.println("3. Logout");
-                System.out.println("4. Exit");
+                System.out.println("2. Generate Reports");
+                System.out.println("3. Reset Tables");
+                System.out.println("4. Logout");
+                System.out.println("5. Exit");
 
 
                 System.out.println("Enter your choice: \t");
@@ -96,14 +97,19 @@ public class Views {
                         break;
 
                     case 2:
+                        GenerateReports gr = new GenerateReports();
+                        gr.run(connection);
+                        break;
+
+                    case 3:
                         PrepareTable.createTable(connection);
                         PrepareTable.insertData(connection);
                         break;
 
-                    case 3:
+                    case 4:
                         return;
 
-                    case 4:
+                    case 5:
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();

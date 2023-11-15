@@ -1,72 +1,3 @@
-//        enterDriverInfo( driverID, driverName, status )
-//        return confirmation
-//
-//        updateDriverInfo( driverID, driverName, status )
-//        return confirmation
-//        If NULL value for any of the fields, then they will not be updated
-//
-//        deleteDriverInfo( driverID)
-//        return confirmation
-//        * If NULL value for any of the fields, then they will not be updated
-//
-//        enterParkingLotInfo( plName, address)
-//        return confirmation
-//
-//        updateParkingLotInfo( plName, address)
-//        return confirmation
-//        * If NULL value for any of the fields, then they will not be updated
-//
-//        deleteParkingLotInfo( plName )
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be updated
-//
-//        enterZoneInfo( plName, zoneID )
-//        return confirmation
-//
-//        updateZoneInfo( plName, zoneID )
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be updated
-//
-//        deleteZoneInfo( plName, zoneID )
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be deleted
-//
-//        enterSpaceInfo( plName, zoneID, spaceNo, spaceType, availabilityStatus ) return confirmation
-//
-//        updateSpaceInfo( plName, zoneID, spaceNo, spaceType, availabilityStatus)
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be updated
-//
-//        deleteSpaceInfo( plName, zoneID, spaceNo, spaceType)
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be deleted
-//
-//        enterPermitInfo( startDate, expirationDate, expirationTime, permitType, driverID, licenseNo, plName, zoneID, spaceNo, staffID )
-//        return confirmation
-//
-//
-//        updatePermitInfo( startDate, expirationDate, expirationTime, permitType, driverID, licenseNo, PLName, zoneID, spaceNo, staffID )
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be updated
-//
-//        deletePermitInfo( startDate, expirationDate, expirationTime, permitType, driverID, licenseNo, plName, zoneID, spaceNo, staffID )
-//        return confirmation
-//        *If NULL value for any of the fields, then they will not be deleted
-//
-//        assignZone (plName, zoneID)
-//        return confirmation
-//
-//        assignSpaceType (plName, spaceNo, spaceType)
-//        return confirmation
-//
-//
-//        appealCitation(citationNumber)
-//        returns True if appeal has been raised, else False.
-//
-//
-//        payCitationFee(citationNumber)
-//        returns True if payment status has been successfully updated to  paid, else False.
-
 package service;
 
 import service.helpers.ResultSetService;
@@ -187,7 +118,6 @@ public class InformationProcessing {
     }
 
     public void enterDriverInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter information for new driver.");
                 System.out.print("Enter driver ID");
@@ -208,7 +138,6 @@ public class InformationProcessing {
                            String status1 = resultSet.getString("Status");
                            System.out.println("Driver ID: " + id + ", Name: " + name + ", Status: " + status1);
                        }
-                   }
             }
             finally{
                 System.out.println("New Driver created");
@@ -247,7 +176,6 @@ public void updateDriverInformation(Connection conn){
 
 
 public void deleteDriverInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Driver ID of the driver you want to delete");
                 System.out.print("Enter driver ID");
@@ -271,7 +199,6 @@ public void deleteDriverInformation(Connection conn){
 
     // check if string can hold the address, cuz address might be long set of chars ;)
     public void enterParkingLotInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -290,7 +217,6 @@ public void deleteDriverInformation(Connection conn){
                 		String addr = resultSet.getString("address");
                 		System.out.println("Parking Lot Name : " + plName + ", Staff ID : " + name + ", Address : " + addr);
            }
-        }
      }
             finally{
                 System.out.println("Parking Lot details entered successfully");
@@ -302,7 +228,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void updateParkingLotInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -318,7 +243,6 @@ public void deleteDriverInformation(Connection conn){
                     		String addr = resultSet.getString("address");
                     		System.out.println("Parking Lot Name : " + plName + ", Staff ID : " + name + ", Address : " + addr);
                }
-            }
            }
             finally{
                 System.out.println("Parking Lot details updated successfully");
@@ -329,7 +253,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void deleteParkingLotInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -350,7 +273,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void enterZoneInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -366,7 +288,6 @@ public void deleteDriverInformation(Connection conn){
                            String plName= resultSet.getString("parkingLotName");
                            System.out.println("Parking Lot Name : " + plName + ", Zone ID : " + id);
                        }
-                   }
             }
             finally{
                 System.out.println("Parking Lot details updated with Zone succesfully");
@@ -378,7 +299,6 @@ public void deleteDriverInformation(Connection conn){
 
     public void updateZoneInformation(Connection conn){
         try{
-            try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
                 String parkingLotName = sc.nextLine();
@@ -395,7 +315,6 @@ public void deleteDriverInformation(Connection conn){
                            String plName= resultSet.getString("parkingLotName");
                            System.out.println("Parking Lot Name : " + plName + ", Zone ID : " + id);
                        }
-                   }
             }
             finally{
                 System.out.println("Zone details updated succesfully");
@@ -406,7 +325,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void deleteZoneInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -430,7 +348,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void enterSpaceInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -451,7 +368,6 @@ public void deleteDriverInformation(Connection conn){
                             String space_type = resultSet.getString("spaceType");
                     		System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
                }
-                        }
             }
             finally{
                 System.out.println("Space information created succesfully");
@@ -462,7 +378,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void updateSpaceInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -483,7 +398,6 @@ public void deleteDriverInformation(Connection conn){
                             String space_type = resultSet.getString("spaceType");
                     		System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
                }
-                        }
             }
             finally{
                 System.out.println("Space information updated succesfully");
@@ -494,7 +408,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void deleteSpaceInformation(Connection conn){
-        try{
             try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.print("Enter the parking lot name");
@@ -522,7 +435,6 @@ public void deleteDriverInformation(Connection conn){
 
     public void deletePermitInformation(Connection conn){
         try{
-            try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.println("Enter the permit ID");
                 int permitId = sc.nextInt();
@@ -547,7 +459,6 @@ public void deleteDriverInformation(Connection conn){
 
     public void assignZone(Connection conn){
         try{
-            try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.println("Enter the parking lot name");
                 int parkingLotName= sc.nextInt();
@@ -563,7 +474,6 @@ public void deleteDriverInformation(Connection conn){
                     		String zone_id = resultSet.getString("zoneId");
                     		System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id);
                }
-                        }
 
             }
             finally{
@@ -576,7 +486,6 @@ public void deleteDriverInformation(Connection conn){
 
     public void assignSpaceType(Connection conn){
         try{
-            try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.println("Enter the parking lot name");
                 int parkingLotName= sc.nextInt();
@@ -598,7 +507,6 @@ public void deleteDriverInformation(Connection conn){
                             String space_type = resultSet.getString("spaceType");
                     		System.out.println("Parking Lot Name : " + plName + ", zone ID : " + zone_id + ",Space Number: " + spaceNo + ", Space Type: " + space_type);
                }
-                        }
 
             }
             finally{
@@ -611,7 +519,6 @@ public void deleteDriverInformation(Connection conn){
 
     public void applyCitation(Connection conn){
         try{
-            try{
                 System.out.println("Enter the Parking Lot Information");
                 System.out.println("Enter the driver ID");
                 int driverId= sc.nextInt();
@@ -629,7 +536,6 @@ public void deleteDriverInformation(Connection conn){
                             String appealStat= resultSet.getString("appealStatus");
                     		System.out.println("Driver ID : " + dId + ", Citation Number : " + cNumber + ", Appeal Status : " +appealStat);
                         }
-               }
 
             }
             finally{
@@ -641,7 +547,6 @@ public void deleteDriverInformation(Connection conn){
     }
 
     public void payCitationFees(Connection conn){
-        try{
             try{
                 System.out.println("Enter the citation Number : ");
                 int citationNumber = sc.nextInt();
@@ -668,7 +573,6 @@ public void deleteDriverInformation(Connection conn){
                     		String payment_status = resultSet1.getString("paymentStatus");
                     		System.out.println("Citation Number : " + citation_number + ", Payment Status : " + payment_status );
                    }
-                        }
                 
                 }
                 else {

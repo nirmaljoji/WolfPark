@@ -173,7 +173,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " rows deleted.");
-                System.out.println("Driver information deleted succesfully");
+                System.out.println("Driver information deleted successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -260,7 +260,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) inserted.");
-                System.out.println("Parking Lot details updated with Zone succesfully");
+                System.out.println("Parking Lot details updated with Zone successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -285,7 +285,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) updated.");
-                System.out.println("Zone details updated succesfully");
+                System.out.println("Zone details updated successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -308,7 +308,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) deleted.");
-                System.out.println("Zone deleted succesfully");
+                System.out.println("Zone deleted successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -336,7 +336,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) inserted.");
-                System.out.println("Space information created succesfully");
+                System.out.println("Space information created successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -364,7 +364,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result + " row(s) updated.");
-                System.out.println("Space information updated succesfully");
+                System.out.println("Space information updated successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -389,7 +389,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println("Space " + spaceNumber + " is being deleted. Rows affected: " + result);
-                System.out.println("Space information deleted succesfully");
+                System.out.println("Space information deleted successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -414,7 +414,7 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println("Permit Info " + permitId + " is being deleted. Rows affected: " + result);
-                System.out.println("Permit information deleted succesfully");
+                System.out.println("Permit information deleted successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -463,6 +463,7 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceType);
 
                 int result = preparedStatement.executeUpdate();
+                System.out.println(result + " row(s) inserted.");
                 System.out.println("Assigned space type");
             }
         } catch (Exception ex) {

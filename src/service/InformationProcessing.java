@@ -18,32 +18,32 @@ public class InformationProcessing {
 	    /* Display list of operations for user to select */
             while (true){
                 System.out.println("\nINFORMATION PROCESSING:");
-                System.out.println("1. Enter Driver Information. \n");
-                System.out.println("2. Update Driver Information. \n");
-                System.out.println("3. Delete Driver Information. \n");
-                System.out.println("4. Enter Parking Lot Information. \n");
-                System.out.println("5. Update Parking Lot Information. \n");
-                System.out.println("6. Delete Parking Lot Information. \n");
-                System.out.println("7. Enter Zone Information. \n");
-                System.out.println("8. Update Zone Information. \n");
-                System.out.println("9. Delete Zone Information. \n");
-                System.out.println("10. Enter Space Information. \n");
-                System.out.println("11. Update Space Information. \n");
-                System.out.println("12. Delete Space Information. \n");
-                System.out.println("13. Enter Permit Information. \n");
-                System.out.println("14. Update Permit Information. \n");
-                System.out.println("15. Delete Permit Information. \n");
-                System.out.println("16. Assign Zone \n");
-                System.out.println("17. Assign Space Type \n");
-                System.out.println("18. Appeal Citation \n");
-                System.out.println("19. Pay Citation \n");
-		System.out.printlN("20. Exit to Main Menu "):
-                
-                
-                System.out.println("Enter you choice: ");
-                int choice = sc.nextInt();
+                System.out.println("1. Enter Driver Information.");
+                System.out.println("2. Update Driver Information.");
+                System.out.println("3. Delete Driver Information.");
+                System.out.println("4. Enter Parking Lot Information.");
+                System.out.println("5. Update Parking Lot Information.");
+                System.out.println("6. Delete Parking Lot Information.");
+                System.out.println("7. Enter Zone Information.");
+                System.out.println("8. Update Zone Information.");
+                System.out.println("9. Delete Zone Information.");
+                System.out.println("10. Enter Space Information.");
+                System.out.println("11. Update Space Information.");
+                System.out.println("12. Delete Space Information.");
+                System.out.println("13. Enter Permit Information.");
+                System.out.println("14. Update Permit Information.");
+                System.out.println("15. Delete Permit Information.");
+                System.out.println("16. Assign Zone.");
+                System.out.println("17. Assign Space Type.");
+                System.out.println("18. Appeal Citation.");
+                System.out.println("19. Pay Citation.");
+		        System.out.println("20. Return to Main Menu. ");
 
-                    
+                
+                System.out.println("Enter your choice: ");
+                int choice = sc.nextInt();
+                sc.nextLine();
+
                 switch (choice) {
                     case 1:
                     	enterDriverInformation(conn);
@@ -102,9 +102,8 @@ public class InformationProcessing {
                     case 19:
                     	//payCitationFees(conn);
                         break;
-		    case 20:
-			return;
-                    
+		            case 20:
+			            return;
                     default:
                         System.out.println("Invalid Input");
                 }
@@ -130,16 +129,13 @@ public class InformationProcessing {
                 System.out.println("Enter the Status of the driver :");
                 String status = sc.nextLine();
                 
-                String query = "INSERT INTO Driver (DriverID, DriverName, Status) VALUES (" + driverId + ", " + driverName + ", " + status + "');";
+                String query = "INSERT INTO Driver (DriverID, DriverName, Status) VALUES (?, ?, ?);";
+                try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                    preparedStatement.setString(1, driverId);
+                    preparedStatement.setString(2, driverName);
+                    preparedStatement.setString(3, status);
 
-                try (PreparedStatement preparedStatement = conn.prepareStatement(query); 
-                        ResultSet resultSet = preparedStatement.executeQuery()) {
-                       while (resultSet.next()) {
-                           int id = resultSet.getInt("driverId");
-                           String name = resultSet.getString("driverName");
-                           String status1 = resultSet.getString("Status");
-                           System.out.println("Driver ID: " + id + ", Name: " + name + ", Status: " + status1);
-                       }
+                    preparedStatement.executeUpdate();
             }
             finally{
                 System.out.println("New Driver created");
@@ -520,7 +516,7 @@ public void deleteDriverInformation(Connection conn){
         try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the driver ID : ");
-                String driverId= sc.nextString();
+                String driverId= sc.nextLine();
                 System.out.println("Enter the citation Number : ");
                 String citationNumber = sc.nextLine();
                 System.out.println("Enter the appeal status : ");

@@ -153,7 +153,7 @@ public void updateDriverInformation(Connection conn){
         try{
                 System.out.println("Enter information for updating driver information.");
                 System.out.print("Enter driver ID : ");
-                int driverId =  sc.nextInt();
+                String driverId =  sc.nextLine();
                 System.out.println("Enter the new driver name : ");
                 String driverName = sc.nextLine();
                 String query = "UPDATE Driver SET DriverName = '" + driverName + "' WHERE DriverID = '" + driverId+ "');" ;
@@ -181,7 +181,7 @@ public void deleteDriverInformation(Connection conn){
             try{
                 System.out.println("Enter the Driver ID of the driver you want to delete.");
                 System.out.print("Enter driver ID : ");
-                int driverId =  sc.nextInt();
+                String driverId =  sc.nextLine();
                 String query = "DELETE FROM Driver WHERE DriverID = " + driverId+ "';";
 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -205,7 +205,7 @@ public void deleteDriverInformation(Connection conn){
                 System.out.print("Enter the parking lot name : ");
                 String parkingLotName = sc.nextLine();
                 System.out.println("Enter the staff ID : ");
-                int staffId = sc.nextInt();
+                String staffId = sc.nextLine();
                 System.out.println("Enter the address : ");
                 String address = sc.nextLine();
                 String query = "INSERT INTO ParkingLot (PLName, StaffID, Address) VALUES ('" + parkingLotName + "', '" + staffId + "', '" + address + "');";
@@ -354,7 +354,7 @@ public void deleteDriverInformation(Connection conn){
                 System.out.println("Enter the Zone ID : ");
                 String zoneId = sc.nextLine();
                 System.out.println("Enter the space number : ");
-                int spaceNumber = sc.nextInt();
+                String spaceNumber = sc.nextLine();
                 System.out.println("Enter the space type : ");
                 String spaceType = sc.nextLine();
                 String query = "INSERT INTO Space (PLName, ZoneID, SpaceNo, SpaceType) VALUES ('" + parkingLotName + "', '" + zoneId + "', '" + spaceNumber + "', '" + spaceType + ";')";
@@ -364,7 +364,7 @@ public void deleteDriverInformation(Connection conn){
                     	while (resultSet.next()) {
                     		String plName = resultSet.getString("parkingLotName");
                     		String spaceNo = resultSet.getString("spaceNumber");
-                            String space_type = resultSet.getString("spaceType");
+                                String space_type = resultSet.getString("spaceType");
                     		System.out.println("Parking Lot Name : " + plName + ", space number : " + spaceNo + "space type: " + space_type );
                }
             }
@@ -384,7 +384,7 @@ public void deleteDriverInformation(Connection conn){
                 System.out.println("Enter the Zone ID : ");
                 String zoneId = sc.nextLine();
                 System.out.println("Enter the space number : ");
-                int spaceNumber = sc.nextInt();
+                String spaceNumber = sc.nextLine();
                 System.out.println("Enter the space type : ");
                 String spaceType = sc.nextLine();
                 String query = "UPDATE Space SET SpaceType = '" + spaceType + "' WHERE PLName = '" + parkingLotName + "' AND ZoneID = '" + zoneId + "' AND SpaceNo = '" + spaceNumber + "';";
@@ -414,7 +414,7 @@ public void deleteDriverInformation(Connection conn){
                 System.out.println("Enter the Zone ID : ");
                 String zoneId = sc.nextLine();
                 System.out.println("Enter the space number : ");
-                int spaceNumber = sc.nextInt();
+                String spaceNumber = sc.nextLine();
                 String query = "DELETE FROM Space WHERE PLName = '" + parkingLotName + "' AND ZoneID = '" + zoneId + "' AND SpaceNo = '" + spaceNumber + "';";
 
                 try (PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -430,7 +430,6 @@ public void deleteDriverInformation(Connection conn){
     
         }
   }
-
 
 
     public void deletePermitInformation(Connection conn){
@@ -461,8 +460,8 @@ public void deleteDriverInformation(Connection conn){
         try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the parking lot name : ");
-                int parkingLotName= sc.nextInt();
-                System.out.println("Enter the zone ID");
+                String parkingLotName= sc.nextLine();
+                System.out.println("Enter the zone ID : ");
                 String zoneId = sc.nextLine();
                 
                 String query = "INSERT INTO Zone (PLName, ZoneID) VALUES ('" + parkingLotName + "', " + zoneId + ");";
@@ -488,7 +487,7 @@ public void deleteDriverInformation(Connection conn){
         try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the parking lot name : ");
-                int parkingLotName= sc.nextInt();
+                String parkingLotName= sc.nextLine();
                 System.out.println("Enter the zone ID : ");
                 String zoneId = sc.nextLine();
                 System.out.println("Enter the space number : ");
@@ -521,9 +520,9 @@ public void deleteDriverInformation(Connection conn){
         try{
                 System.out.println("Enter the Parking Lot Information.");
                 System.out.println("Enter the driver ID : ");
-                int driverId= sc.nextInt();
+                String driverId= sc.nextString();
                 System.out.println("Enter the citation Number : ");
-                int citationNumber = sc.nextInt();
+                String citationNumber = sc.nextLine();
                 System.out.println("Enter the appeal status : ");
                 String appealStatus = sc.nextLine();
                 String query = "INSERT INTO Appeals (DriverID, CitationNo, AppealStatus) "+"VALUES ('" + driverId + "', '" + citationNumber + "', '" + appealStatus + "');";

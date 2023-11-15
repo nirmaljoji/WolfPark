@@ -122,9 +122,9 @@ public class InformationProcessing {
 	    /* Method to read information of a new Driver entry*/
             try{
                 System.out.println("Enter information for new driver.");
-                System.out.print("Enter driver ID");
-                int driverId =  sc.nextInt();
-                System.out.println("Enter the driver name");
+                System.out.print("Enter driver ID : ");
+                String driverId =  sc.nextLine();
+                System.out.println("Enter the driver name :");
                 String driverName = sc.nextLine();
                 
                 System.out.println("Enter the Status of the driver.");

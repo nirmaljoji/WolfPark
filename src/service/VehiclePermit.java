@@ -275,20 +275,44 @@ public class VehiclePermit {
                     case 3:
                         System.out.print("Enter new Model: ");
                         String model = scanner.nextLine();
-                        System.out.print("Enter new Manufacturer: ");
-                        String manufacturer = scanner.nextLine();
-                        sql = "UPDATE VehicleModelManufacturer v INNER JOIN Vehicle vh ON vh.model = v.model SET v.Model = ?, v.Manufacturer = ? WHERE LicenseNo = ?;";
-                        stmt = conn.prepareStatement(sql);
-                        stmt.setString(1, model);
-                        stmt.setString(2, manufacturer);
-                        stmt.setString(3, licenceNo_old);
-                        int check3 = stmt.executeUpdate();
-                        if(check3 == 1){
-                            System.out.println("Updated Successfully!");
+                        PreparedStatement checkIfExists = conn.prepareStatement("SELECT 1 FROM VehicleModelManufacturer WHERE Model = ?");
+                        checkIfExists.setString(1, model);
+                        ResultSet resultSet3 = checkIfExists.executeQuery();
+                        if(resultSet3.next()){
+                            final String updateVeh1 = "UPDATE Vehicle V SET V.model = ? WHERE LicenseNo = ?";
+                            PreparedStatement updateVeh2 = conn.prepareStatement(updateVeh1);
+                            updateVeh2.setString(1, model);
+                            updateVeh2.setString(2, licenceNo_old);
+                            int check7 = updateVeh2.executeUpdate();
+                            if(check7 ==1){
+                                System.out.println("Updated successfully!");
+                            }else{
+                                System.out.println("Please enter valid information!");
+                            }
+                            updateVeh2.close();
                         }else{
-                            System.out.println("Please enter valid information");
+                            System.out.println("Model not existsing in database!");
+                            System.out.println("Enter Manufacturer:");
+                            String manf = scanner.nextLine();
+                            final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
+                            PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
+                            statement1.setString(1, model);
+                            statement1.setString(2, manf);
+                            statement1.executeUpdate();
+                            statement1.close();
+
+                            final String updateVeh = "UPDATE Vehicle V SET V.model = ? WHERE LicenseNo = ?";
+                            PreparedStatement updateVeh1 = conn.prepareStatement(updateVeh);
+                            updateVeh1.setString(1, model);
+                            updateVeh1.setString(2,licenceNo_old);
+                            int check6  = updateVeh1.executeUpdate();
+                            if(check6 ==1){
+                                System.out.println("Updated successfully!");
+                            }else{
+                                System.out.println("Please enter valid information!");
+                            }
+
                         }
-                        stmt.close();
                         break;
                     case 4:
                         System.out.print("Enter new Color: ");

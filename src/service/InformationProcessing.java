@@ -441,6 +441,7 @@ public class InformationProcessing {
             System.out.println("Enter the space type : ");
             String spaceType = sc.nextLine();
 
+
             String query = "INSERT INTO Space (PLName, ZoneID, SpaceNo, SpaceType) VALUES (?, ?, ?, ?);";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, parkingLotName);

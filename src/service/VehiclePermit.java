@@ -354,7 +354,7 @@ public class VehiclePermit {
             System.out.print("Enter Parking Lot: ");
             final String parkingLot = scanner.nextLine();
 
-            System.out.print("Enter Zone ID: ");
+            System.out.print("Enter Zone ID (integer): ");
             final String zoneID = scanner.nextLine();
 
             System.out.print("Enter Space No: ");
@@ -860,7 +860,7 @@ public class VehiclePermit {
                 return true;
 
             } else {
-                System.out.println("Please enter valid Parking Location");
+                System.out.println("Please enter valid Information");
                 return false;
             }
         } catch (Exception e) {

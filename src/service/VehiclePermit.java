@@ -354,10 +354,10 @@ public class VehiclePermit {
             System.out.print("Enter Parking Lot: ");
             final String parkingLot = scanner.nextLine();
 
-            System.out.print("Enter Zone ID (integer): ");
+            System.out.print("Enter Zone ID: ");
             final String zoneID = scanner.nextLine();
 
-            System.out.print("Enter Space No: ");
+            System.out.print("Enter Space No (integer): ");
             final int spaceID = scanner.nextInt();
             scanner.nextLine();
             final int StaffID = 1;

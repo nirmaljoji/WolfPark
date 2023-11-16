@@ -465,7 +465,7 @@ public class VehiclePermit {
                             System.out.println("Permits within allowed limit .... ✓");
                             return true;
                         } else {
-                            if (resultSet.getInt("PermitCount") == 2 && ( permitType == "Special Event" || permitType == "Park & Ride")) {
+                            if (resultSet.getInt("PermitCount") == 2 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride"))) {
                                 System.out.println("Permits within allowed limit .... ✓");
                                 return true;
                             }

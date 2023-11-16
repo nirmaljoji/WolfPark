@@ -27,7 +27,8 @@ public class Main {
                 System.out.println("********************************************");
 
                 while(true){
-                    System.out.println("\n🌟 Please choose the user you want to login as:");
+                    System.out.println("\n🌟🌟 Landing Page 🌟🌟");
+                    System.out.println("\nPlease choose the user you want to login as:");
                     System.out.println("1. Admin");
                     System.out.println("2. Security");
                     System.out.println("3. Driver");

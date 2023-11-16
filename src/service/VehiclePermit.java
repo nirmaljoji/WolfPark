@@ -38,10 +38,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Year;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.time.LocalDate;
 
 public class VehiclePermit {
@@ -111,7 +108,13 @@ public class VehiclePermit {
             String deletePermit = "DELETE from Vehicle where LicenseNo = ?;";
             PreparedStatement stmt1 = conn.prepareStatement(deletePermit);
             stmt1.setString(1, licenseNo);
-            stmt1.executeQuery();
+            int check = stmt1.executeUpdate();
+
+            if(check == 1){
+                System.out.println("Vehicle Deleted Successfully");
+            }else{
+                System.out.println("Please enter Valid Information");
+            }
             stmt1.close();
 
         } catch (Exception ex) {
@@ -124,40 +127,79 @@ public class VehiclePermit {
         try {
             System.out.println("Enter new vehicle information: ");
             //(LicenseNo, Model, Color, Manufacturer, Year, DriverID)
-            System.out.println("License No: ");
+            System.out.print("License No: ");
             String licenseNo = scanner.nextLine();
-            System.out.println("DriverID: ");
+            System.out.print("DriverID: ");
             String driverID = scanner.nextLine();
-            System.out.println("Model : ");
+            System.out.print("Model : ");
             String model = scanner.nextLine();
-            System.out.println("Color: ");
+            System.out.print("Color: ");
             String color = scanner.nextLine();
-            System.out.println("Manufacturer: ");
-            String manufacturer = scanner.nextLine();
-            System.out.println("Year (YYYY-MM-DD): ");
+            String manufacturer = "none";
+            System.out.print("Manufacturer (nullable): ");
+            manufacturer = scanner.nextLine();
+            System.out.print("Year (YYYY): ");
             String year = scanner.nextLine();
+            System.out.println("Choose Vehicle Category: ");
+            System.out.println("1. Regular");
+            System.out.println("2. Compact Car");
+            System.out.println("3. Electric");
+            System.out.println("4. Handicap");
+            String vehicleCategory = "";
+            int choice = scanner.nextInt();
+            switch (choice){
+                case 1 : vehicleCategory = "Regular";
+                    break;
+                case 2 : vehicleCategory = "Compact Car";
+                    break;
+                case 3 : vehicleCategory = "Electric";
+                    break;
+                case 4 : vehicleCategory = "Handicap";
+                    break;
+                default: System.out.println("Please enter valid information");
+                    break;
+            }
+            scanner.nextLine();
 
-            final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(insertToVehicle);
-            statement.setString(1, licenseNo);
-            statement.setString(2, driverID);
-            statement.setString(3, model);
-            statement.setString(4, color);
-            statement.setString(5, manufacturer);
-            statement.setString(6, year);
-            statement.executeUpdate();
-            statement.close();
 
-            if (manufacturer.compareTo("") == 0) {
-                final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
-                PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
-                statement1.setString(1, model);
-                statement1.setString(2, manufacturer);
-                statement1.executeUpdate();
-                statement1.close();
+
+            PreparedStatement checkIfExists = conn.prepareStatement("SELECT 1 FROM VehicleModelManufacturer WHERE Model = ?");
+            checkIfExists.setString(1, model);
+            ResultSet resultSet = checkIfExists.executeQuery();
+
+            conn.setAutoCommit(false);
+            try{
+                if (!resultSet.next()) {
+                    final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
+                    PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
+                    statement1.setString(1, model);
+                    statement1.setString(2, manufacturer);
+                    statement1.executeUpdate();
+                    statement1.close();
+
+                }
+
+                final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement statement = conn.prepareStatement(insertToVehicle);
+                statement.setString(1, licenseNo);
+                statement.setString(2, driverID);
+                statement.setString(3, model);
+                statement.setString(4, color);
+                statement.setString(5, year);
+                statement.setString(6, vehicleCategory);
+                statement.executeUpdate();
+                statement.close();
+
+                conn.commit();
+                System.out.println("Added Vehicle Successfully");
+                conn.setAutoCommit(true);
+            }catch(Exception ex){
+                conn.rollback();
+                System.out.println("Transaction rolled back: " + ex.getMessage());
+            }finally {
+                conn.setAutoCommit(true);
             }
 
-            System.out.println("Added Vehicle Successfully");
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -248,7 +290,7 @@ public class VehiclePermit {
                         System.out.println("Updated Successfully!");
                         break;
                     case 5:
-                        System.out.print("Enter new Year (YYYY-MM-DD): ");
+                        System.out.print("Enter new Year (YYYY): ");
                         String year = scanner.nextLine();
                         sql = "UPDATE Vehicle SET Year = year WHERE LicenseNo = ?;";
                         stmt = conn.prepareStatement(sql);
@@ -299,8 +341,8 @@ public class VehiclePermit {
             final String permitID = scanner.nextLine();
 
 
-            String vehicleCategory = "Select PLName, ZoneID, SpaceNo FROM PermitLocation WHERE PermitID = ?;";
-            PreparedStatement stmt = conn.prepareStatement(vehicleCategory);
+            String permitExists = "Select PLName, ZoneID, SpaceNo FROM PermitLocation WHERE PermitID = ?;";
+            PreparedStatement stmt = conn.prepareStatement(permitExists);
             stmt.setString(1, permitID);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
@@ -357,7 +399,7 @@ public class VehiclePermit {
             System.out.print("Enter Zone ID: ");
             final String zoneID = scanner.nextLine();
 
-            System.out.print("Enter Space No: ");
+            System.out.print("Enter Space No (integer): ");
             final int spaceID = scanner.nextInt();
             scanner.nextLine();
             final int StaffID = 1;
@@ -380,6 +422,7 @@ public class VehiclePermit {
                 System.out.println("1.Use today's date");
                 System.out.println("2.Enter custom date");
                 final int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -388,7 +431,7 @@ public class VehiclePermit {
                         break;
                     case 2:
                         System.out.println("Enter a Start date (yyyy-mm-dd): ");
-                        startDate = LocalDate.now().toString();
+                        startDate = scanner.nextLine();
                         break;
                     default:
                         System.out.println("Please enter a valid input");
@@ -467,7 +510,7 @@ public class VehiclePermit {
                             System.out.println("Permits within allowed limit .... ✓");
                             return true;
                         } else {
-                            if (resultSet.getInt("PermitCount") == 2 && ( permitType == "Special Event" || permitType == "Park & Ride")) {
+                            if (resultSet.getInt("PermitCount") == 2 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride"))) {
                                 System.out.println("Permits within allowed limit .... ✓");
                                 return true;
                             }
@@ -482,7 +525,7 @@ public class VehiclePermit {
                         break;
                     case "S":
                         if (resultSet.getInt("PermitCount") == 1) {
-                            if (resultSet.getInt("PermitCount") == 1 && ( permitType == "Special Event" || permitType == "Park & Ride")) {
+                            if (resultSet.getInt("PermitCount") == 1 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride"))) {
                                 System.out.println("Permits within allowed limit .... ✓");
                                 return true;
                             }
@@ -510,11 +553,19 @@ public class VehiclePermit {
             final String permitID = scanner.nextLine();
 
             final String sqlQuery = "Select * from PermitLocation natural join Permit where Permit.PermitID = ?;";
-            System.out.println("\nPERMIT DETAILS:");
+
             PreparedStatement statement = conn.prepareStatement(sqlQuery);
             statement.setString(1, permitID);
             ResultSet resultSet = statement.executeQuery();
-            resultSetService.viewFromResultSet(resultSet);
+            ResultSet resultSet1 = statement.executeQuery();
+            if(resultSet1.next()){
+                System.out.println("\nPERMIT DETAILS:");
+                resultSetService.viewFromResultSet(resultSet);
+            }else{
+                System.out.println("Please Enter Valid Information");
+                return ;
+            }
+
 
             System.out.println("Select information to update:");
             System.out.println("1. Permit ID");
@@ -538,9 +589,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, new_permitID);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result = stmt.executeUpdate();
+                    if(result == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 2:
                     System.out.print("Enter new Start Date (yyyy-mm-dd): ");
@@ -549,9 +604,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, startDate);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result1 = stmt.executeUpdate();
+                    if(result1 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 3:
                     System.out.print("Enter new Expiration Date (yyyy-mm-dd): ");
@@ -560,9 +619,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, expirationDate);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result2 = stmt.executeUpdate();
+                    if(result2 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 4:
                     System.out.print("Enter new Expiration Time (HH:MM:SS): ");
@@ -571,20 +634,29 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, expirationTime);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result3 = stmt.executeUpdate();
+                    if(result3 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 5:
                     System.out.print("Enter new Permit Type:  ");
                     String permitType = scanner.nextLine();
-                    sql = "UPDATE Permit SET PermitType = ? WHERE PermitID = ?;";
-                    stmt = conn.prepareStatement(sql);
-                    stmt.setString(1, permitType);
-                    stmt.setString(2, permitID);
-                    stmt.executeUpdate();
-                    stmt.close();
-                    System.out.println("Permit updated succesfully");
+                    if(updatePermitType(conn, permitType, permitID)){
+                        sql = "UPDATE Permit SET PermitType = ? WHERE PermitID = ?;";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, permitType);
+                        stmt.setString(2, permitID);
+                        stmt.executeUpdate();
+                        int result4 = stmt.executeUpdate();
+                        if(result4 == 1){
+                            System.out.println("Permit updated successfully");
+                        }
+                        stmt.close();
+                    }
                     break;
                 case 6:
                     System.out.print("Enter new license No:  ");
@@ -601,6 +673,7 @@ public class VehiclePermit {
                         System.out.print("Enter new Space: ");
                         int Space = scanner.nextInt();
                         value = UpdateParkingLocation(conn, PLName, Zone, Space, permitID);
+                        scanner.nextLine();
                     }
                     System.out.println("Permit updated succesfully");
                     break;
@@ -612,6 +685,50 @@ public class VehiclePermit {
             System.out.println("Exception:" + ex.getMessage());
         }
 
+    }
+
+    private boolean updatePermitType(Connection conn, String permitType, String permitID) {
+        try {
+            String getDriverID = "select d.DriverID from Driver d INNER JOIN Vehicle V on d.DriverID = V.DriverID INNER JOIN Permit P on V.LicenseNo = P.LicenseNo WHERE P.PermitID = ?";
+            PreparedStatement checkDriverID = conn.prepareStatement(getDriverID);
+            checkDriverID.setString(1, permitID);
+            ResultSet resultSet1 = checkDriverID.executeQuery();
+            resultSet1.next();
+            String driverID1 = resultSet1.getString("DriverID");
+
+            String checkPermitCountSQL = "Select d.driverID,count(*) AS PermitCount, d.status FROM Vehicle v INNER JOIN Permit p on p.LicenseNo = v.LicenseNo INNER JOIN Driver d on d.driverID = v.driverID WHERE d.driverID = ?;";
+            PreparedStatement checkPermitCount = conn.prepareStatement(checkPermitCountSQL);
+            checkPermitCount.setString(1, driverID1);
+            ResultSet resultSet = checkPermitCount.executeQuery();
+            if (resultSet.next()) {
+                switch (resultSet.getString("Status")) {
+                    case "E":
+                        if (resultSet.getInt("PermitCount") == 3 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride" ))) {
+                            System.out.println("Permits within allowed limit .... ✓");
+                            return true;
+                        } else {
+                            System.out.println("Permits within allowed limit .... X");
+                            return false;
+                        }
+                    case "S":
+                        if (resultSet.getInt("PermitCount") == 2 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride" ))) {
+                            System.out.println("Permits within allowed limit .... ✓");
+                            return true;
+                        } else {
+                            System.out.println("Permits within allowed limit .... X");
+                            return false;
+                        }
+                    default:
+                        System.out.println("Please enter valid information");
+                        return false;
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+        return false;
     }
 
     private void updateLicenseNo(String licenseNo, String permitID, Connection conn) {
@@ -636,6 +753,8 @@ public class VehiclePermit {
                 } else {
                     System.out.println("Please enter valid information");
                 }
+            }else{
+                System.out.println("Please enter valid information");
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -659,10 +778,12 @@ public class VehiclePermit {
                 update.setString(4,permitID);
                 update.executeUpdate();
                 System.out.println("Permit Updated Successfully");
+                return true;
             } else {
-                System.out.println("Please try again!");
+                System.out.println("Please enter valid information");
+                return false;
             }
-            return true;
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -828,7 +949,7 @@ public class VehiclePermit {
             PreparedStatement stmt = conn.prepareStatement(driverStatusSql);
             stmt.setString(1, DriverID);
             ResultSet resultSet = stmt.executeQuery();
-            String[] employees = new String[]{"A", " B", "C", "D"};
+            String[] employees = new String[]{"A", "B", "C", "D"};
             String[] students = new String[]{"AS", "BS", "CS", "DS"};
             String[] visitors = new String[]{"V"};
             if (resultSet.next()) {
@@ -860,7 +981,7 @@ public class VehiclePermit {
                 return true;
 
             } else {
-                System.out.println("Please enter valid Parking Location");
+                System.out.println("Please enter valid Information");
                 return false;
             }
         } catch (Exception e) {

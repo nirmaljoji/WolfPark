@@ -122,7 +122,7 @@ public class InformationProcessing {
             System.out.println("Enter the driver name : ");
             String driverName = sc.nextLine();
 
-            System.out.println("Enter the Status of the driver :");
+            System.out.println("Enter the Status of the driver (S,E,V) :");
             String status = sc.nextLine();
 
             String query = "INSERT INTO Driver (DriverID, DriverName, Status) VALUES (?, ?, ?);";
@@ -143,21 +143,20 @@ public class InformationProcessing {
     public void updateDriverInformation(Connection conn) {
         try {
             System.out.println("Enter information for updating driver information.");
-            System.out.print("Enter driver ID : ");
+            System.out.print("1. Driver ID : ");
             String driverId = sc.nextLine();
-            System.out.println("Enter the new driver name : ");
+            System.out.println("2.Driver name : ");
             String driverName = sc.nextLine();
             String query = "UPDATE Driver SET DriverName = ? WHERE DriverID = ?;";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, driverName);
                 preparedStatement.setString(2, driverId);
-
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " rows updated.");
+                System.out.println("Driver details are updated");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
-            System.out.println("Driver details updated");
+
         }
     }
 
@@ -170,9 +169,7 @@ public class InformationProcessing {
             String query = "DELETE FROM Driver WHERE DriverID = ?;";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, driverId);
-
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " rows deleted.");
                 System.out.println("Driver information deleted successfully");
             }
         } catch (Exception ex) {
@@ -186,18 +183,16 @@ public class InformationProcessing {
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
-            System.out.println("Enter the staff ID : ");
-            String staffId = sc.nextLine();
+            String staffId = "1";
             System.out.println("Enter the address : ");
             String address = sc.nextLine();
             String query = "INSERT INTO ParkingLot (PLName, StaffID, Address) VALUES (?, ?, ?);";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(1, parkingLotName); // Assuming parkingLotName is a String
-                preparedStatement.setString(2, staffId);          // Assuming staffId is an integer
-                preparedStatement.setString(3, address);       // Assuming address is a String
+                preparedStatement.setString(1, parkingLotName);
+                preparedStatement.setString(2, staffId);
+                preparedStatement.setString(3, address);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) inserted.");
                 System.out.println("Parking Lot details entered successfully");
             }
         } catch (Exception ex) {
@@ -214,12 +209,12 @@ public class InformationProcessing {
             String parkingLotName = sc.nextLine();
             System.out.println("Enter the address : ");
             String address = sc.nextLine();
-            String query = "UPDATE ParkingLot SET Address = ? WHERE PLName = ?;";
+            String query = "UPDATE ParkingLot SET Address = ? , PLName = ? WHERE PLName = ?;";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                 preparedStatement.setString(1, address);
                 preparedStatement.setString(2, parkingLotName);
+                preparedStatement.setString(3, parkingLotName);
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) updated.");
                 System.out.println("Parking Lot details updated successfully");
             }
         } catch (Exception ex) {
@@ -237,7 +232,6 @@ public class InformationProcessing {
                 preparedStatement.setString(1, parkingLotName); // Assuming parkingLotName is a String
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) deleted.");
                 System.out.println("Parking Lot details deleted successfully");
             }
         } catch (Exception ex) {
@@ -259,7 +253,6 @@ public class InformationProcessing {
                 preparedStatement.setString(2, zoneId);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) inserted.");
                 System.out.println("Parking Lot details updated with Zone successfully");
             }
         } catch (Exception ex) {
@@ -284,7 +277,6 @@ public class InformationProcessing {
                 preparedStatement.setString(3, zoneId);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) updated.");
                 System.out.println("Zone details updated successfully");
             }
         } catch (Exception ex) {
@@ -307,7 +299,6 @@ public class InformationProcessing {
                 preparedStatement.setString(2, zoneId);        // Assuming zoneId is a String
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) deleted.");
                 System.out.println("Zone deleted successfully");
             }
         } catch (Exception ex) {
@@ -318,8 +309,8 @@ public class InformationProcessing {
     /* Method to add a space  in the Space table*/
     public void enterSpaceInformation(Connection conn) {
         try {
-            System.out.print("Enter the Parking Lot Information.");
-            System.out.print("Enter the parking lot name : ");
+            System.out.println("Enter the Parking Lot Information.");
+            System.out.println("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
             System.out.println("Enter the Zone ID : ");
             String zoneId = sc.nextLine();
@@ -335,7 +326,6 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceType);     // Assuming spaceType is a String
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) inserted.");
                 System.out.println("Space information created successfully");
             }
         } catch (Exception ex) {
@@ -363,7 +353,6 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceNumber);      // Assuming spaceNumber is an Integer
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) updated.");
                 System.out.println("Space information updated successfully");
             }
         } catch (Exception ex) {
@@ -388,7 +377,6 @@ public class InformationProcessing {
                 preparedStatement.setString(3, spaceNumber);      // Assuming spaceNumber is an Integer
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println("Space " + spaceNumber + " is being deleted. Rows affected: " + result);
                 System.out.println("Space information deleted successfully");
             }
         } catch (Exception ex) {
@@ -413,7 +401,6 @@ public class InformationProcessing {
                 preparedStatement.setInt(1, permitId); // Assuming permitId is an integer
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println("Permit Info " + permitId + " is being deleted. Rows affected: " + result);
                 System.out.println("Permit information deleted successfully");
             }
         } catch (Exception ex) {
@@ -435,7 +422,6 @@ public class InformationProcessing {
                 preparedStatement.setString(2, zoneId);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) inserted.");
                 System.out.println("Assigned Zone");
             }
         } catch (Exception ex) {
@@ -463,7 +449,6 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceType);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println(result + " row(s) inserted.");
                 System.out.println("Assigned space type");
             }
         } catch (Exception ex) {

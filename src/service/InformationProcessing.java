@@ -153,11 +153,11 @@ public class InformationProcessing {
                 preparedStatement.setString(2, driverId);
                 int result = preparedStatement.executeUpdate();
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Driver details are updated");
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -177,11 +177,11 @@ public class InformationProcessing {
                 int result = preparedStatement.executeUpdate();
                 System.out.println(result);
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Driver information deleted successfully");
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -204,7 +204,12 @@ public class InformationProcessing {
                 preparedStatement.setString(3, address);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println("Parking Lot details entered successfully");
+                if(result == 0){
+                    System.out.println("Please Enter Valid Information");
+                }
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -226,12 +231,11 @@ public class InformationProcessing {
                 preparedStatement.setString(2, parkingLotName);
                 preparedStatement.setString(3, parkingLotName);
                 int result = preparedStatement.executeUpdate();
-                if(result == 0){
-
+                if (result == 0) {
                     System.out.println("Please Enter Valid Information");
-
+                } else {
+                    System.out.println("Space information updated successfully");
                 }
-                System.out.println("Parking Lot details updated successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -249,11 +253,11 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Parking Lot details deleted successfully");
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -298,11 +302,11 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Zone details updated successfully");
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -325,11 +329,11 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Zone deleted successfully");
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -384,11 +388,11 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Space information updated successfully");
+                else {
+                    System.out.println("Space information updated successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -413,11 +417,11 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 if(result == 0){
-
                     System.out.println("Please Enter Valid Information");
-
                 }
-                System.out.println("Space information deleted successfully");
+                else {
+                    System.out.println("Space information deleted successfully");
+                }
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -467,7 +471,13 @@ public class InformationProcessing {
                 preparedStatement.setString(2, zoneId);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println("Assigned Zone");
+                if(result == 0){
+                    System.out.println("Please Enter Valid Information");
+                }
+                else {
+                    System.out.println("Assigned Zone");
+                }
+
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -495,7 +505,13 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceType);
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println("Assigned space type");
+                if(result == 0){
+                    System.out.println("Please Enter Valid Information");
+                }
+                else {
+                    System.out.println("Assigned space type");
+                }
+
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());

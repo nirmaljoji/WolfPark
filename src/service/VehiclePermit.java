@@ -108,7 +108,13 @@ public class VehiclePermit {
             String deletePermit = "DELETE from Vehicle where LicenseNo = ?;";
             PreparedStatement stmt1 = conn.prepareStatement(deletePermit);
             stmt1.setString(1, licenseNo);
-            stmt1.executeQuery();
+            int check = stmt1.executeUpdate();
+
+            if(check == 1){
+                System.out.println("Vehicle Deleted Successfully");
+            }else{
+                System.out.println("Please enter Valid Information");
+            }
             stmt1.close();
 
         } catch (Exception ex) {

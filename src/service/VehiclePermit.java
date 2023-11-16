@@ -127,18 +127,47 @@ public class VehiclePermit {
         try {
             System.out.println("Enter new vehicle information: ");
             //(LicenseNo, Model, Color, Manufacturer, Year, DriverID)
-            System.out.println("License No: ");
+            System.out.print("License No: ");
             String licenseNo = scanner.nextLine();
-            System.out.println("DriverID: ");
+            System.out.print("DriverID: ");
             String driverID = scanner.nextLine();
-            System.out.println("Model : ");
+            System.out.print("Model : ");
             String model = scanner.nextLine();
-            System.out.println("Color: ");
+            System.out.print("Color: ");
             String color = scanner.nextLine();
-            System.out.println("Manufacturer: ");
-            String manufacturer = scanner.nextLine();
-            System.out.println("Year (YYYY): ");
+            String manufacturer = "none";
+            System.out.print("Manufacturer (nullable): ");
+            manufacturer = scanner.nextLine();
+            System.out.print("Year (YYYY): ");
             String year = scanner.nextLine();
+            System.out.println("Choose Vehicle Category: ");
+            System.out.println("1. Regular");
+            System.out.println("2. Compact Car");
+            System.out.println("3. Electric");
+            System.out.println("4. Handicap");
+            String vehicleCategory = "";
+            int choice = scanner.nextInt();
+            switch (choice){
+                case 1 : vehicleCategory = "Regular";
+                    break;
+                case 2 : vehicleCategory = "Compact Car";
+                    break;
+                case 3 : vehicleCategory = "Electric";
+                    break;
+                case 4 : vehicleCategory = "Handicap";
+                    break;
+                default: System.out.println("Please enter valid information");
+                    break;
+            }
+            scanner.nextLine();
+            System.out.println(manufacturer);
+                final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
+                PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
+                statement1.setString(1, model);
+                statement1.setString(2, manufacturer);
+                statement1.executeUpdate();
+                statement1.close();
+
 
             final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(insertToVehicle);
@@ -146,19 +175,11 @@ public class VehiclePermit {
             statement.setString(2, driverID);
             statement.setString(3, model);
             statement.setString(4, color);
-            statement.setString(5, manufacturer);
-            statement.setString(6, year);
+            statement.setString(5, year);
+            statement.setString(6, vehicleCategory);
             statement.executeUpdate();
             statement.close();
 
-            if (manufacturer.compareTo("") == 0) {
-                final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
-                PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
-                statement1.setString(1, model);
-                statement1.setString(2, manufacturer);
-                statement1.executeUpdate();
-                statement1.close();
-            }
 
             System.out.println("Added Vehicle Successfully");
 

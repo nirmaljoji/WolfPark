@@ -79,7 +79,9 @@ public class Citations {
             String zoneID = scanner.nextLine();
 
             System.out.println("Enter SpaceNo:");
-            String spaceNo = scanner.nextLine();
+            int spaceNo = scanner.nextInt();
+            scanner.nextLine();
+
 
             // Check if there is no permit
             String noPermitQuery = "SELECT * FROM Permit WHERE LicenseNo = ?";
@@ -114,7 +116,7 @@ public class Citations {
                 permitValidationStatement.setString(1, licenseNo);
                 permitValidationStatement.setString(2, plName);
                 permitValidationStatement.setString(3, zoneID);
-                permitValidationStatement.setString(4, spaceNo);
+                permitValidationStatement.setInt(4, spaceNo);
 
                 ResultSet permitValidationResult = permitValidationStatement.executeQuery();
 

@@ -160,7 +160,6 @@ public class VehiclePermit {
                     break;
             }
             scanner.nextLine();
-            System.out.println(manufacturer);
                 final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
                 PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
                 statement1.setString(1, model);

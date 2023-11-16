@@ -389,7 +389,7 @@ public class VehiclePermit {
                         break;
                     case 2:
                         System.out.println("Enter a Start date (yyyy-mm-dd): ");
-                        startDate = LocalDate.now().toString();
+                        startDate = scanner.nextLine();
                         break;
                     default:
                         System.out.println("Please enter a valid input");

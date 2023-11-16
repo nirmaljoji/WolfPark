@@ -655,6 +655,7 @@ public class VehiclePermit {
                         System.out.print("Enter new Space: ");
                         int Space = scanner.nextInt();
                         value = UpdateParkingLocation(conn, PLName, Zone, Space, permitID);
+                        scanner.nextLine();
                     }
                     System.out.println("Permit updated succesfully");
                     break;

@@ -457,7 +457,6 @@ public class InformationProcessing {
         }
     }
 
-
     /*public void applyCitation(Connection conn){
         try{
 		/* Method to track a drivers application for citation Parking Lot */

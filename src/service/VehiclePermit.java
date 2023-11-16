@@ -606,20 +606,18 @@ public class VehiclePermit {
                 case 5:
                     System.out.print("Enter new Permit Type:  ");
                     String permitType = scanner.nextLine();
-                    sql = "UPDATE Permit SET PermitType = ? WHERE PermitID = ?;";
-                    stmt = conn.prepareStatement(sql);
-                    stmt.setString(1, permitType);
-                    stmt.setString(2, permitID);
-                    stmt.executeUpdate();
-
-                    int result4 = stmt.executeUpdate();
-                    if(result4 == 1){
-                        System.out.println("Permit updated successfully");
-                    }else{
-                        System.out.println("Please enter valid information");
+                    if(updatePermitType(conn, permitType, permitID)){
+                        sql = "UPDATE Permit SET PermitType = ? WHERE PermitID = ?;";
+                        stmt = conn.prepareStatement(sql);
+                        stmt.setString(1, permitType);
+                        stmt.setString(2, permitID);
+                        stmt.executeUpdate();
+                        int result4 = stmt.executeUpdate();
+                        if(result4 == 1){
+                            System.out.println("Permit updated successfully");
+                        }
+                        stmt.close();
                     }
-                    stmt.close();
-
                     break;
                 case 6:
                     System.out.print("Enter new license No:  ");
@@ -647,6 +645,50 @@ public class VehiclePermit {
             System.out.println("Exception:" + ex.getMessage());
         }
 
+    }
+
+    private boolean updatePermitType(Connection conn, String permitType, String permitID) {
+        try {
+            String getDriverID = "select d.DriverID from Driver d INNER JOIN Vehicle V on d.DriverID = V.DriverID INNER JOIN Permit P on V.LicenseNo = P.LicenseNo WHERE P.PermitID = ?";
+            PreparedStatement checkDriverID = conn.prepareStatement(getDriverID);
+            checkDriverID.setString(1, permitID);
+            ResultSet resultSet1 = checkDriverID.executeQuery();
+            resultSet1.next();
+            String driverID1 = resultSet1.getString("DriverID");
+
+            String checkPermitCountSQL = "Select d.driverID,count(*) AS PermitCount, d.status FROM Vehicle v INNER JOIN Permit p on p.LicenseNo = v.LicenseNo INNER JOIN Driver d on d.driverID = v.driverID WHERE d.driverID = ?;";
+            PreparedStatement checkPermitCount = conn.prepareStatement(checkPermitCountSQL);
+            checkPermitCount.setString(1, driverID1);
+            ResultSet resultSet = checkPermitCount.executeQuery();
+            if (resultSet.next()) {
+                switch (resultSet.getString("Status")) {
+                    case "E":
+                        if (resultSet.getInt("PermitCount") == 3 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride" ))) {
+                            System.out.println("Permits within allowed limit .... ✓");
+                            return true;
+                        } else {
+                            System.out.println("Permits within allowed limit .... X");
+                            return false;
+                        }
+                    case "S":
+                        if (resultSet.getInt("PermitCount") == 2 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride" ))) {
+                            System.out.println("Permits within allowed limit .... ✓");
+                            return true;
+                        } else {
+                            System.out.println("Permits within allowed limit .... X");
+                            return false;
+                        }
+                    default:
+                        System.out.println("Please enter valid information");
+                        return false;
+                }
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+        return false;
     }
 
     private void updateLicenseNo(String licenseNo, String permitID, Connection conn) {

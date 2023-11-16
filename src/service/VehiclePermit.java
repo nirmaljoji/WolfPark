@@ -508,11 +508,19 @@ public class VehiclePermit {
             final String permitID = scanner.nextLine();
 
             final String sqlQuery = "Select * from PermitLocation natural join Permit where Permit.PermitID = ?;";
-            System.out.println("\nPERMIT DETAILS:");
+
             PreparedStatement statement = conn.prepareStatement(sqlQuery);
             statement.setString(1, permitID);
             ResultSet resultSet = statement.executeQuery();
-            resultSetService.viewFromResultSet(resultSet);
+            ResultSet resultSet1 = statement.executeQuery();
+            if(resultSet1.next()){
+                System.out.println("\nPERMIT DETAILS:");
+                resultSetService.viewFromResultSet(resultSet);
+            }else{
+                System.out.println("Please Enter Valid Information");
+                return ;
+            }
+
 
             System.out.println("Select information to update:");
             System.out.println("1. Permit ID");

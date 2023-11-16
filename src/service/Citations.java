@@ -26,7 +26,8 @@ public class Citations {
                 System.out.println("2. Generate a Citation");
                 System.out.println("3. Update a Citation");
                 System.out.println("4. Accept or reject an Appeal");
-                System.out.println("5. Return to Main Menu\n");
+                System.out.println("5. Delete a Citation");
+                System.out.println("6. Return to Main Menu\n");
                 System.out.println("Enter you choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -45,11 +46,14 @@ public class Citations {
                         handleAppeal(conn);
                         break;
                     case 5:
+                        deleteCitation(conn);
+                        break;
+                    case 6:
                         return;
                     default:
                         System.out.println("Invalid Input");
                 }
-                if (choice == 5) {
+                if (choice == 6) {
                     break;
                 }
             }
@@ -444,7 +448,7 @@ public class Citations {
                 }
             }
 
-            System.out.println("Enter which field you want to update \n1.CitationDate \n2.CitationTime \n3.StaffID \n4.LicenseNo \n5.PLName");
+            System.out.println("Enter which field you want to update \n1.CitationDate \n2.CitationTime \n3.PLName");
             final String fieldName = scanner.nextLine();
 
             System.out.println("Enter the new value: ");
@@ -459,12 +463,6 @@ public class Citations {
                     sqlQuery = "UPDATE Citation SET CitationTime = ? WHERE CitationNo = ?";
                     break;
                 case "3":
-                    sqlQuery = "UPDATE Citation SET StaffID = ? WHERE CitationNo = ?";
-                    break;
-                case "4":
-                    sqlQuery = "UPDATE Citation SET LicenseNo = ? WHERE CitationNo = ?";
-                    break;
-                case "5":
                     sqlQuery = "UPDATE Citation SET PLName = ? WHERE CitationNo = ?";
                     break;
                 default:
@@ -571,6 +569,36 @@ public class Citations {
         }
         return true;
     }
+
+    public boolean deleteCitation(Connection conn) {
+        try {
+            System.out.println("Citations in the database:");
+            resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Citation;");
+
+            System.out.print("Enter the citation number to delete: ");
+            final String CNo = scanner.nextLine();
+
+            String query = "DELETE FROM Citation WHERE CitationNo = ?";
+
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, CNo);
+
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Citation deleted successfully.");
+                } else {
+                    System.out.println("No citation found with the given citation number.");
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex.getMessage());
+            return false;
+        }
+        return true;
+    }
 }
+
+
 
 

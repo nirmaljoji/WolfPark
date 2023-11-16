@@ -45,7 +45,7 @@ public class PrepareTable {
 
                 stmt.addBatch( " CREATE TABLE Citation ( CitationNo VARCHAR(10) PRIMARY KEY, CitationDate DATE NOT NULL, CitationTime TIME NOT NULL, PaymentStatus ENUM ('Pending', 'Complete', 'Not Required'), StaffID INT NOT NULL, LicenseNo VARCHAR(255) NOT NULL, PLName VARCHAR(255) NOT NULL, CitationName VARCHAR(32), FOREIGN KEY (CitationName) REFERENCES CitationCategory(CitationName), FOREIGN KEY (StaffID) REFERENCES Staff(StaffID), FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (PLName) REFERENCES ParkingLot(PLName), CHECK (CitationName in ('Invalid Permit', 'Expired Permit', 'No Permit', 'Handicap Invalid Permit', 'Handicap Expired Permit', 'Handicap No Permit')));");
 
-                stmt.addBatch( " CREATE TABLE Appeals ( DriverID VARCHAR(10) NOT NULL, CitationNo VARCHAR(10) NOT NULL, AppealStatus VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (CitationNo) REFERENCES Citation(CitationNo), CHECK (AppealStatus in ('Requested', 'Rejected', 'Accepted')) );");
+                stmt.addBatch( " CREATE TABLE Appeals ( DriverID VARCHAR(10) NOT NULL, CitationNo VARCHAR(10) NOT NULL, AppealStatus VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (CitationNo) REFERENCES Citation(CitationNo) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (AppealStatus in ('Requested', 'Rejected', 'Accepted')) );");
 
                 stmt.executeBatch();
                 System.out.print("All required tables created.....");

@@ -18,7 +18,8 @@ public class Views {
         try {
             Scanner scanner = new Scanner(System.in);
             while (true) {
-                System.out.println("\n🌟 Choose one of the following options:");
+                System.out.println("\n🌟🌟 ADMIN VIEW 🌟🌟");
+                System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Information Processing");
                 System.out.println("2. Maintain Permit and Vehicle Information");
                 System.out.println("3. Generate Reports");
@@ -85,7 +86,8 @@ public class Views {
         try {
             Scanner scanner = new Scanner(System.in);
             while (true) {
-                System.out.println("\n🌟 Choose one of the following options:");
+                System.out.println("\n🌟🌟 SECURITY VIEW 🌟🌟");
+                System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Generate and Maintain Citations");
                 System.out.println("2. Generate Reports");
                 System.out.println("3. View Tables");
@@ -147,7 +149,8 @@ public class Views {
         try {
             Scanner scanner = new Scanner(System.in);
             while (true) {
-                System.out.println("\n🌟 Choose one of the following options:");
+                System.out.println("\n🌟🌟 DRIVER VIEW 🌟🌟");
+                System.out.println("\nChoose one of the following options:");
                 System.out.println("1. View Driver Information");
                 System.out.println("2. View Vehicles");
                 System.out.println("3. View Permits");

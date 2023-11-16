@@ -1,4 +1,6 @@
 import service.helpers.ConnectionHelper;
+import service.helpers.PrepareTable;
+import service.helpers.ViewTable;
 import service.helpers.Views;
 
 import java.sql.Connection;
@@ -29,7 +31,9 @@ public class Main {
                     System.out.println("1. Admin");
                     System.out.println("2. Security");
                     System.out.println("3. Driver");
-                    System.out.println("4. Exit");
+                    System.out.println("4. View Tables");
+                    System.out.println("5. Reset Tables");
+                    System.out.println("6. Exit");
 
                     System.out.println("Enter your choice: \t");
                     int choice = scanner.nextInt();
@@ -46,18 +50,27 @@ public class Main {
                             break;
 
                         case 3:
-                            staff = 3;
                             l.DriverView(connection);
                             break;
 
                         case 4:
+                            ViewTable vt = new ViewTable();
+                            vt.run(connection);
+                            break;
+
+                        case 5:
+                            PrepareTable.createTable(connection);
+                            PrepareTable.insertData(connection);
+                            break;
+
+                        case 6:
                             break;
 
                         default:
                             System.out.println("Invalid Input, Please try again.");
                     }
 
-                    if(choice == 4) {
+                    if(choice == 6) {
                         break;
                     }
                 }

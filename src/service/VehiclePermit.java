@@ -46,12 +46,13 @@ public class VehiclePermit {
     Scanner scanner = new Scanner(System.in);
     ResultSetService resultSetService = new ResultSetService();
 
-
+    // Method to run the permit and vehicle management system.
     public void run(Connection conn) {
 
         try {
 
             while (true) {
+                // Displaying options to the user
                 System.out.println("\nMAINTAIN PERMIT AND VEHICLE INFORMATION:");
                 System.out.println("1. Create new Permit");
                 System.out.println("2. Update Permit");
@@ -62,6 +63,7 @@ public class VehiclePermit {
                 System.out.println("7. Check permit validity of vehicle for given lot");
                 System.out.println("8. Return to Main Menu\n");
                 System.out.println("Enter you choice: ");
+                // Handling user input to perform actions based on choice
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
@@ -88,13 +90,13 @@ public class VehiclePermit {
                         checkCarValidity(conn);
                         break;
                     case 8:
-                        return;
+                        return; // Exit the loop and hence the method
                     default:
                         System.out.println("Invalid Input");
                         break;
                 }
                 if (choice == 8) {
-                    break;
+                    break; // Breaking out of the loop if choice is 8 (return to main menu)
                 }
             }
         } catch (Exception ex) {
@@ -104,6 +106,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to check the validity of a car's parking permit in a given lot.
     private void checkCarValidity(Connection conn) {
 
         try{
@@ -143,6 +146,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to delete a vehicle record from the system.
     private void deleteVehicle(Connection conn) {
         try {
             System.out.print("(DELETE) Enter License No of vehicle : ");
@@ -166,6 +170,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to add a new vehicle to the system.
     private void addVehicle(Connection conn) {
         try {
             System.out.println("Enter new vehicle information: ");
@@ -209,7 +214,7 @@ public class VehiclePermit {
             PreparedStatement checkIfExists = conn.prepareStatement("SELECT 1 FROM VehicleModelManufacturer WHERE Model = ?");
             checkIfExists.setString(1, model);
             ResultSet resultSet = checkIfExists.executeQuery();
-
+            // Starting transaction control
             conn.setAutoCommit(false);
             try{
                 if (!resultSet.next()) {
@@ -232,22 +237,23 @@ public class VehiclePermit {
                 statement.setString(6, vehicleCategory);
                 statement.executeUpdate();
                 statement.close();
-
+                // Committing the transaction if all inserts are successful
                 conn.commit();
                 System.out.println("Added Vehicle Successfully");
             }catch(Exception ex){
+                // Rolling back the transaction in case of any exception
                 conn.rollback();
                 System.out.println("Transaction rolled back: " + ex.getMessage());
             }finally {
+                // Resetting auto-commit to true
                 conn.setAutoCommit(true);
             }
-
-
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
+    // Method to update the ownership of a vehicle.
     private void updateVehicleOwnership(Connection conn) {
 
 
@@ -426,6 +432,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to delete a parking permit.
     private void deletePermit(Connection conn) {
         try {
             System.out.print("(DELETE) Enter permit ID : ");
@@ -440,6 +447,7 @@ public class VehiclePermit {
                 String PlName = resultSet.getString("PLName");
                 String Zone = resultSet.getString("ZoneID");
                 int Space = resultSet.getInt("SpaceNo");
+                // Starting transaction control
                 conn.setAutoCommit(false);
                 try{
                     String deletePermit = "DELETE from Permit where PermitID = ?;";
@@ -455,13 +463,16 @@ public class VehiclePermit {
                     statement5.setInt(3, Space);
                     statement5.executeUpdate();
                     statement5.close();
+                    // Committing the transaction if both delete and update are successful
                     conn.commit();
                     System.out.println("Availability Status Updated");
                     System.out.println("Permit Deleted");
                 }catch(Exception ex){
+                    // Rolling back the transaction in case of any exception
                     conn.rollback();
                     System.out.println("Transaction rolled back: "+ ex.getMessage());
                 }finally{
+                    // Resetting auto-commit to true
                     conn.setAutoCommit(true);
                 }
 
@@ -474,7 +485,7 @@ public class VehiclePermit {
         }
     }
 
-
+    // Method to create a new parking permit.
     public void createPermit(Connection conn) {
 
         try {
@@ -553,14 +564,6 @@ public class VehiclePermit {
                 statement.executeUpdate();
                 statement.close();
 
-//
-//                final String insertToDriverVehiclePermit = "INSERT INTO DriverVehiclePermit (DriverID, LicenseNo) VALUES (?, ?)";
-//                PreparedStatement statement1 = conn.prepareStatement(insertToDriverVehiclePermit);
-//                statement1.setString(1,driverID);
-//                statement1.setString(2, licenseNo);
-//                statement1.executeUpdate();
-//                statement1.close();
-
                 final String insertToPermitLocation = "INSERT INTO PermitLocation (PermitID, PLName, ZoneID, SpaceNo) VALUES (?, ?, ?, ?)";
                 PreparedStatement statement3 = conn.prepareStatement(insertToPermitLocation);
                 statement3.setString(1, permitID);
@@ -589,6 +592,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to check if the parking count is within limits for a given driver.
     private boolean checkParkingCount(Connection conn, String driverID, String permitType) {
         try {
             String checkPermitCountSQL = " Select count(*) AS PermitCount, d.status FROM Vehicle v INNER JOIN Permit p on p.LicenseNo = v.LicenseNo INNER JOIN Driver d on d.driverID = v.driverID WHERE v.DriverID = ?";
@@ -644,6 +648,7 @@ public class VehiclePermit {
         return false;
     }
 
+    // Method to update an existing parking permit.
     private void updatePermit(Connection conn) {
         try {
 
@@ -785,6 +790,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to update the parking permit type.
     private boolean updatePermitType(Connection conn, String permitType, String permitID) {
         try {
             String getDriverID = "select d.DriverID from Driver d INNER JOIN Vehicle V on d.DriverID = V.DriverID INNER JOIN Permit P on V.LicenseNo = P.LicenseNo WHERE P.PermitID = ?";
@@ -829,6 +835,7 @@ public class VehiclePermit {
         return false;
     }
 
+    // Method to update the license number associated with a permit.
     private void updateLicenseNo(String licenseNo, String permitID, Connection conn) {
         try {
 
@@ -859,6 +866,7 @@ public class VehiclePermit {
         }
     }
 
+    // Method to update the parking location of a permit.
     private boolean UpdateParkingLocation(Connection conn, String plName, String zone, int space, String permitID) {
 
         try {
@@ -888,6 +896,7 @@ public class VehiclePermit {
         return true;
     }
 
+    // Method to update the availability statuses of parking spaces.
     private void UpdateAvailabilityStatuses(Connection conn, String plName, String zone, int space, String permitID) {
 
         try {
@@ -926,7 +935,7 @@ public class VehiclePermit {
 
     }
 
-
+    // Method to check if a parking location is available.
     public boolean checkParkingLocationAvailability(Connection conn, String plName, String zone, int space) {
 
         try {
@@ -956,7 +965,7 @@ public class VehiclePermit {
         }
     }
 
-
+    // Method to check if a parking space is eligible for a given license number.
     public boolean checkParkingEligibilityWithLicenseNo(Connection conn, String plName, String zone, int space, String licenseNo) {
         try {
             String new_spaceType = null;
@@ -999,6 +1008,7 @@ public class VehiclePermit {
         }
     }
 
+    // Method to check if a parking space is eligible for a given permit ID.
     public boolean checkParkingEligibility(Connection conn, String plName, String zone, int space, String permitID) {
         try {
             String new_spaceType = null;
@@ -1011,7 +1021,6 @@ public class VehiclePermit {
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 new_spaceType = resultSet.getString("SpaceType");
-//                System.out.println("Checking if you qualify for Space .... ✓");
             } else {
                 System.out.println("Please enter valid information");
                 return false;
@@ -1041,6 +1050,7 @@ public class VehiclePermit {
         }
     }
 
+    // Method to check if a driver is compatible with a parking zone for a new permit.
     public boolean checkZoneCompatabilityForNewPermit(String Zone, String DriverID, Connection conn) {
         try {
             String driverStatusSql = "Select d.status FROM Driver d WHERE d.DriverID = ?";
@@ -1089,6 +1099,7 @@ public class VehiclePermit {
 
     }
 
+    // Method to check if a driver is compatible with a parking zone.
     public boolean checkZoneCompatability(String Zone, String permitID, Connection conn) {
         try {
             String driverStatusSql = "Select d.status FROM Driver d INNER JOIN Vehicle v on v.DriverID = d.DriverID INNER JOIN Permit p ON p.LicenseNo = v.licenseNo WHERE p.PermitID=?;";

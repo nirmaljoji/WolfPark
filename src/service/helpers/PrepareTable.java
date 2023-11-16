@@ -25,7 +25,7 @@ public class PrepareTable {
 
                 stmt.addBatch(" CREATE TABLE VehicleModelManufacturer ( Model VARCHAR(255) PRIMARY KEY, Manufacturer VARCHAR(255) );");
 
-                stmt.addBatch(" CREATE TABLE Vehicle ( LicenseNo VARCHAR(255) PRIMARY KEY, DriverID VARCHAR(10) NOT NULL, Model VARCHAR(255) NOT NULL, Color VARCHAR(255), Year INT, VehicleCategory VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (Model) REFERENCES VehicleModelManufacturer(Model) ON UPDATE CASCADE, CHECK (VehicleCategory in ('Electric', 'Handicap', 'Compact car', 'Regular')) );");
+                stmt.addBatch(" CREATE TABLE Vehicle ( LicenseNo VARCHAR(255) PRIMARY KEY, DriverID VARCHAR(10) NOT NULL, Model VARCHAR(255) NOT NULL, Color VARCHAR(255), Year YEAR, VehicleCategory VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (Model) REFERENCES VehicleModelManufacturer(Model) ON UPDATE CASCADE, CHECK (VehicleCategory in ('Electric', 'Handicap', 'Compact car', 'Regular')) );");
 
                 stmt.addBatch(" CREATE TABLE Permit ( PermitID VARCHAR(10) PRIMARY KEY, StaffID INT NOT NULL, LicenseNo VARCHAR(255) NOT NULL, StartDate DATE NOT NULL, ExpirationDate DATE NOT NULL, ExpirationTime TIME NOT NULL, PermitType VARCHAR(32), FOREIGN KEY (StaffID) REFERENCES Staff(StaffID), FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (PermitType in ('Residential', 'Commuter', 'Peak Hours', 'Special Event', 'Park & Ride')) );");
 

@@ -137,10 +137,10 @@ public class VehiclePermit {
             String color = scanner.nextLine();
             System.out.println("Manufacturer: ");
             String manufacturer = scanner.nextLine();
-            System.out.println("Year (YYYY-MM-DD): ");
+            System.out.println("Year (YYYY): ");
             String year = scanner.nextLine();
 
-            final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = conn.prepareStatement(insertToVehicle);
             statement.setString(1, licenseNo);
             statement.setString(2, driverID);
@@ -251,7 +251,7 @@ public class VehiclePermit {
                         System.out.println("Updated Successfully!");
                         break;
                     case 5:
-                        System.out.print("Enter new Year (YYYY-MM-DD): ");
+                        System.out.print("Enter new Year (YYYY): ");
                         String year = scanner.nextLine();
                         sql = "UPDATE Vehicle SET Year = year WHERE LicenseNo = ?;";
                         stmt = conn.prepareStatement(sql);

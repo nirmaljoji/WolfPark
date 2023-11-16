@@ -23,11 +23,10 @@ public class ViewTable {
                 System.out.println("8. PermitLocation");
                 System.out.println("9. Space");
                 System.out.println("10. Staff");
-                System.out.println("11. Students");
-                System.out.println("12. Vehicle");
-                System.out.println("13. VehicleModelManufacturer");
-                System.out.println("14. Zone");
-                System.out.println("15. Return to Main Menu\n");
+                System.out.println("11. Vehicle");
+                System.out.println("12. VehicleModelManufacturer");
+                System.out.println("13. Zone");
+                System.out.println("14. Return to Main Menu\n");
                 System.out.println("Enter your choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -64,23 +63,20 @@ public class ViewTable {
                         runSelectAllQuery(conn, "Staff");
                         break;
                     case 11:
-                        runSelectAllQuery(conn, "Students");
-                        break;
-                    case 12:
                         runSelectAllQuery(conn, "Vehicle");
                         break;
-                    case 13:
+                    case 12:
                         runSelectAllQuery(conn, "VehicleModelManufacturer");
                         break;
-                    case 14:
+                    case 13:
                         runSelectAllQuery(conn, "Zone");
                         break;
-                    case 15:
+                    case 14:
                         return;
                     default:
                         System.out.println("Invalid Input");
                 }
-                if (choice == 15) {
+                if (choice == 14) {
                     break;
                 }
             }

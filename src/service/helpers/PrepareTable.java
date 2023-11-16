@@ -41,7 +41,7 @@ public class PrepareTable {
 
                 stmt.addBatch( " CREATE TABLE ParkingLocation ( PLName VARCHAR(255) NOT NULL, ZoneID VARCHAR(2), SpaceNo INT NOT NULL, StaffID INT NOT NULL, AvailabilityStatus BOOLEAN NOT NULL, PRIMARY KEY (PLName, ZoneID, SpaceNo), FOREIGN KEY (PLName, ZoneID, SpaceNo) REFERENCES Space(PLName, ZoneID, SpaceNo) ON DELETE CASCADE, FOREIGN KEY (StaffID) REFERENCES Staff(StaffID) );");
 
-                stmt.addBatch( " CREATE TABLE CitationCategory ( CitationName VARCHAR(32) PRIMARY KEY, Fees INT NOT NULL, CHECK (CitationName in ('Invalid Permit', 'Expired Permit', 'No Permit', 'Handicap Invalid Permit', 'Handicap Expired Permit', 'Handicap No Permit')) );");
+                stmt.addBatch( " CREATE TABLE CitationCategory ( CitationName VARCHAR(32) PRIMARY KEY, Fees DOUBLE NOT NULL, CHECK (CitationName in ('Invalid Permit', 'Expired Permit', 'No Permit', 'Handicap Invalid Permit', 'Handicap Expired Permit', 'Handicap No Permit')) );");
 
                 stmt.addBatch( " CREATE TABLE Citation ( CitationNo VARCHAR(10) PRIMARY KEY, CitationDate DATE NOT NULL, CitationTime TIME NOT NULL, PaymentStatus ENUM ('Pending', 'Complete', 'Not Required'), StaffID INT NOT NULL, LicenseNo VARCHAR(255) NOT NULL, PLName VARCHAR(255) NOT NULL, CitationName VARCHAR(32), FOREIGN KEY (CitationName) REFERENCES CitationCategory(CitationName), FOREIGN KEY (StaffID) REFERENCES Staff(StaffID), FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (PLName) REFERENCES ParkingLot(PLName), CHECK (CitationName in ('Invalid Permit', 'Expired Permit', 'No Permit', 'Handicap Invalid Permit', 'Handicap Expired Permit', 'Handicap No Permit')));");
 

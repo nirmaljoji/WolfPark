@@ -11,6 +11,7 @@ import java.util.Scanner;
 import static java.lang.System.exit;
 
 public class Views {
+    ResultSetService resultSetService = new ResultSetService();
 
     public void AdminView(Connection connection) {
 
@@ -21,9 +22,10 @@ public class Views {
                 System.out.println("1. Information Processing");
                 System.out.println("2. Maintain Permit and Vehicle Information");
                 System.out.println("3. Generate Reports");
-                System.out.println("4. Reset Tables");
-                System.out.println("5. Logout");
-                System.out.println("6. Exit");
+                System.out.println("4. View Tables");
+                System.out.println("5. Reset Tables");
+                System.out.println("6. Logout");
+                System.out.println("7. Exit");
 
 
                 System.out.println("Enter your choice: \t");
@@ -46,14 +48,19 @@ public class Views {
                         break;
 
                     case 4:
+                        ViewTable vt = new ViewTable();
+                        vt.run(connection);
+                        break;
+
+                    case 5:
                         PrepareTable.createTable(connection);
                         PrepareTable.insertData(connection);
                         break;
 
-                    case 5:
+                    case 6:
                         return;
 
-                    case 6:
+                    case 7:
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();
@@ -81,9 +88,10 @@ public class Views {
                 System.out.println("\n🌟 Choose one of the following options:");
                 System.out.println("1. Generate and Maintain Citations");
                 System.out.println("2. Generate Reports");
-                System.out.println("3. Reset Tables");
-                System.out.println("4. Logout");
-                System.out.println("5. Exit");
+                System.out.println("3. View Tables");
+                System.out.println("4. Reset Tables");
+                System.out.println("5. Logout");
+                System.out.println("6. Exit");
 
 
                 System.out.println("Enter your choice: \t");
@@ -102,14 +110,19 @@ public class Views {
                         break;
 
                     case 3:
+                        ViewTable vt = new ViewTable();
+                        vt.run(connection);
+                        break;
+
+                    case 4:
                         PrepareTable.createTable(connection);
                         PrepareTable.insertData(connection);
                         break;
 
-                    case 4:
+                    case 5:
                         return;
 
-                    case 5:
+                    case 6:
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();
@@ -135,13 +148,16 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 System.out.println("\n🌟 Choose one of the following options:");
-                System.out.println("1. View Permits");
+                System.out.println("1. View Driver Information");
                 System.out.println("2. View Vehicles");
-                System.out.println("3. View Citations");
-                System.out.println("4. Appeal Citation");
-                System.out.println("5. Reset Tables");
-                System.out.println("6. Logout");
-                System.out.println("7. Exit");
+                System.out.println("3. View Permits");
+                System.out.println("4. View Citations");
+                System.out.println("5. Appeal Citation");
+                System.out.println("6. Pay Citation Fee");
+                System.out.println("7. View Tables");
+                System.out.println("8. Reset Tables");
+                System.out.println("9. Logout");
+                System.out.println("10. Exit");
 
 
                 System.out.println("Enter your choice: \t");
@@ -149,34 +165,66 @@ public class Views {
 
                 switch (choice) {
                     case 1:
-                        InformationProcessing ip = new InformationProcessing();
-                        ip.run(connection);
+                        System.out.println("Enter Driver ID:");
+                        String driverId = scanner.next();
+
+                        // Execute SQL query to view driver information
+                        resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Driver WHERE DriverID = '" + driverId + "'");
                         break;
 
                     case 2:
-                        Citations citation = new Citations();
-                        citation.run(connection);
+                        System.out.println("Enter Driver ID:");
+                        String driverId2 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+
+                        // Execute SQL query to view vehicles for the given driver
+                        resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Vehicle " +
+                                "WHERE DriverID = '" + driverId2 + "'");
                         break;
 
+
                     case 3:
-                        VehiclePermit vp = new VehiclePermit();
-                        vp.run(connection);
+                        System.out.println("Enter Driver ID:");
+                        String driverId3 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+
+                        // Execute SQL query to view permits for the given driver
+                        resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Permit " +
+                                "WHERE Permit.LicenseNo IN (SELECT LicenseNo FROM Vehicle WHERE DriverID = '" + driverId3 + "')");
                         break;
 
                     case 4:
-                        GenerateReports gr = new GenerateReports();
-                        gr.run(connection);
+                        System.out.println("Enter Driver ID:");
+                        String driverId4 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+
+                        // Execute SQL query to view citations for the given driver
+                        resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Citation " +
+                                "INNER JOIN Vehicle ON Citation.LicenseNo = Vehicle.LicenseNo " +
+                                "WHERE Vehicle.DriverID = '" + driverId4 + "'");
                         break;
 
                     case 5:
+                        Citations c = new Citations();
+                        c.appealCitation(connection);
+                        break;
+
+                    case 6:
+                        Citations c1 = new Citations();
+                        c1.payCitationFee(connection);
+                        break;
+
+                    case 7:
+                        ViewTable vt = new ViewTable();
+                        vt.run(connection);
+                        break;
+
+                    case 8:
                         PrepareTable.createTable(connection);
                         PrepareTable.insertData(connection);
                         break;
 
-                    case 6:
+                    case 9:
                         return;
 
-                    case 7:
+                    case 10:
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();

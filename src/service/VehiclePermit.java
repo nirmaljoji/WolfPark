@@ -160,27 +160,46 @@ public class VehiclePermit {
                     break;
             }
             scanner.nextLine();
-                final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
-                PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
-                statement1.setString(1, model);
-                statement1.setString(2, manufacturer);
-                statement1.executeUpdate();
-                statement1.close();
 
 
-            final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(insertToVehicle);
-            statement.setString(1, licenseNo);
-            statement.setString(2, driverID);
-            statement.setString(3, model);
-            statement.setString(4, color);
-            statement.setString(5, year);
-            statement.setString(6, vehicleCategory);
-            statement.executeUpdate();
-            statement.close();
 
+            PreparedStatement checkIfExists = conn.prepareStatement("SELECT 1 FROM VehicleModelManufacturer WHERE Model = ?");
+            checkIfExists.setString(1, model);
+            ResultSet resultSet = checkIfExists.executeQuery();
 
-            System.out.println("Added Vehicle Successfully");
+            conn.setAutoCommit(false);
+            try{
+                if (!resultSet.next()) {
+                    final String insertToVehicleModel = "INSERT INTO VehicleModelManufacturer (Model, Manufacturer) VALUES (?, ?)";
+                    PreparedStatement statement1 = conn.prepareStatement(insertToVehicleModel);
+                    statement1.setString(1, model);
+                    statement1.setString(2, manufacturer);
+                    statement1.executeUpdate();
+                    statement1.close();
+
+                }
+
+                final String insertToVehicle = "INSERT INTO Vehicle (LicenseNo, DriverID, Model, Color, Year, VehicleCategory) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement statement = conn.prepareStatement(insertToVehicle);
+                statement.setString(1, licenseNo);
+                statement.setString(2, driverID);
+                statement.setString(3, model);
+                statement.setString(4, color);
+                statement.setString(5, year);
+                statement.setString(6, vehicleCategory);
+                statement.executeUpdate();
+                statement.close();
+
+                conn.commit();
+                System.out.println("Added Vehicle Successfully");
+                conn.setAutoCommit(true);
+            }catch(Exception ex){
+                conn.rollback();
+                System.out.println("Transaction rolled back: " + ex.getMessage());
+            }finally {
+                conn.setAutoCommit(true);
+            }
+
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

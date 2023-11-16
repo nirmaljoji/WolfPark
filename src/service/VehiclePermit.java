@@ -550,9 +550,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, new_permitID);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result = stmt.executeUpdate();
+                    if(result == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 2:
                     System.out.print("Enter new Start Date (yyyy-mm-dd): ");
@@ -561,9 +565,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, startDate);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result1 = stmt.executeUpdate();
+                    if(result1 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 3:
                     System.out.print("Enter new Expiration Date (yyyy-mm-dd): ");
@@ -572,9 +580,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, expirationDate);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result2 = stmt.executeUpdate();
+                    if(result2 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 4:
                     System.out.print("Enter new Expiration Time (HH:MM:SS): ");
@@ -583,9 +595,13 @@ public class VehiclePermit {
                     stmt = conn.prepareStatement(sql);
                     stmt.setString(1, expirationTime);
                     stmt.setString(2, permitID);
-                    stmt.executeUpdate();
+                    int result3 = stmt.executeUpdate();
+                    if(result3 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
                     break;
                 case 5:
                     System.out.print("Enter new Permit Type:  ");
@@ -595,8 +611,15 @@ public class VehiclePermit {
                     stmt.setString(1, permitType);
                     stmt.setString(2, permitID);
                     stmt.executeUpdate();
+
+                    int result4 = stmt.executeUpdate();
+                    if(result4 == 1){
+                        System.out.println("Permit updated successfully");
+                    }else{
+                        System.out.println("Please enter valid information");
+                    }
                     stmt.close();
-                    System.out.println("Permit updated succesfully");
+
                     break;
                 case 6:
                     System.out.print("Enter new license No:  ");
@@ -648,6 +671,8 @@ public class VehiclePermit {
                 } else {
                     System.out.println("Please enter valid information");
                 }
+            }else{
+                System.out.println("Please enter valid information");
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
@@ -671,10 +696,12 @@ public class VehiclePermit {
                 update.setString(4,permitID);
                 update.executeUpdate();
                 System.out.println("Permit Updated Successfully");
+                return true;
             } else {
-                System.out.println("Please try again!");
+                System.out.println("Please enter valid information");
+                return false;
             }
-            return true;
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

@@ -59,7 +59,8 @@ public class VehiclePermit {
                 System.out.println("4. Update Vehicle Ownership");
                 System.out.println("5. Add Vehicle");
                 System.out.println("6. Remove Vehicle");
-                System.out.println("7. Return to Main Menu\n");
+                System.out.println("7. Check permit validity of vehicle for given lot");
+                System.out.println("8. Return to Main Menu\n");
                 System.out.println("Enter you choice: ");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
@@ -84,18 +85,60 @@ public class VehiclePermit {
                         deleteVehicle(conn);
                         break;
                     case 7:
+                        checkCarValidity(conn);
+                        break;
+                    case 8:
                         return;
                     default:
                         System.out.println("Invalid Input");
                         break;
                 }
-                if (choice == 7) {
+                if (choice == 8) {
                     break;
                 }
             }
         } catch (Exception ex) {
             System.out.println("Exception: " + ex.getMessage());
 
+        }
+
+    }
+
+    private void checkCarValidity(Connection conn) {
+
+        try{
+            System.out.println("Enter the License No of car to be checked");
+            String carLicense = scanner.nextLine();
+
+            System.out.println("Enter PLName:");
+            String plName = scanner.nextLine();
+
+            System.out.println("Enter ZoneID:");
+            String zoneID = scanner.nextLine();
+
+            System.out.println("Enter SpaceNo:");
+            int spaceNo = scanner.nextInt();
+            scanner.nextLine();
+
+            String noPermitQuery = "SELECT P.PLName,P.ZoneID,P.SpaceNo from PermitLocation P inner join nsjoji.Permit P2 on P.PermitID = P2.PermitID WHERE P2.LicenseNo = ?;";
+            PreparedStatement stmt  = conn.prepareStatement(noPermitQuery);
+            stmt.setString(1,carLicense);
+            ResultSet resultSet = stmt.executeQuery();
+            boolean state = false;
+            while(resultSet.next()){
+                if(Objects.equals(resultSet.getString("PLName"), plName) && Objects.equals(resultSet.getString("ZoneID"), zoneID) && (resultSet.getInt("SpaceNo") == spaceNo)){
+                    state = true;
+                    break;
+                }
+            }
+            if(state){
+                System.out.println("Valid Parking lot");
+            }else{
+                System.out.println("Parking Violation !!");
+            }
+
+        }catch(Exception ex){
+            System.out.println(ex.getMessage());
         }
 
     }

@@ -192,7 +192,6 @@ public class VehiclePermit {
 
                 conn.commit();
                 System.out.println("Added Vehicle Successfully");
-                conn.setAutoCommit(true);
             }catch(Exception ex){
                 conn.rollback();
                 System.out.println("Transaction rolled back: " + ex.getMessage());
@@ -413,10 +412,11 @@ public class VehiclePermit {
                     statement5.setInt(3, Space);
                     statement5.executeUpdate();
                     statement5.close();
-
+                    conn.commit();
                     System.out.println("Availability Status Updated");
                     System.out.println("Permit Deleted");
                 }catch(Exception ex){
+                    conn.rollback();
                     System.out.println("Transaction rolled back: "+ ex.getMessage());
                 }finally{
                     conn.setAutoCommit(true);

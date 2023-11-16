@@ -398,23 +398,29 @@ public class VehiclePermit {
                 String PlName = resultSet.getString("PLName");
                 String Zone = resultSet.getString("ZoneID");
                 int Space = resultSet.getInt("SpaceNo");
+                conn.setAutoCommit(false);
+                try{
+                    String deletePermit = "DELETE from Permit where PermitID = ?;";
+                    PreparedStatement stmt1 = conn.prepareStatement(deletePermit);
+                    stmt1.setString(1, permitID);
+                    stmt1.executeQuery();
+                    stmt1.close();
 
-                String deletePermit = "DELETE from Permit where PermitID = ?;";
-                PreparedStatement stmt1 = conn.prepareStatement(deletePermit);
-                stmt1.setString(1, permitID);
-                stmt1.executeQuery();
-                stmt1.close();
+                    final String updateAvailabilityStatus = "UPDATE ParkingLocation SET AvailabilityStatus = true WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ? ;";
+                    PreparedStatement statement5 = conn.prepareStatement(updateAvailabilityStatus);
+                    statement5.setString(1, PlName);
+                    statement5.setString(2, Zone);
+                    statement5.setInt(3, Space);
+                    statement5.executeUpdate();
+                    statement5.close();
 
-                final String updateAvailabilityStatus = "UPDATE ParkingLocation SET AvailabilityStatus = true WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ? ;";
-                PreparedStatement statement5 = conn.prepareStatement(updateAvailabilityStatus);
-                statement5.setString(1, PlName);
-                statement5.setString(2, Zone);
-                statement5.setInt(3, Space);
-                statement5.executeUpdate();
-                statement5.close();
-                System.out.println("Availability Status Updated");
-                System.out.println("Permit Deleted");
-
+                    System.out.println("Availability Status Updated");
+                    System.out.println("Permit Deleted");
+                }catch(Exception ex){
+                    System.out.println("Transaction rolled back: "+ ex.getMessage());
+                }finally{
+                    conn.setAutoCommit(true);
+                }
 
             } else {
                 System.out.println("Please enter valid information");

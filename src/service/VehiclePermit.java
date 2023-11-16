@@ -38,10 +38,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.Year;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.time.LocalDate;
 
 public class VehiclePermit {
@@ -483,7 +480,7 @@ public class VehiclePermit {
                         break;
                     case "S":
                         if (resultSet.getInt("PermitCount") == 1) {
-                            if (resultSet.getInt("PermitCount") == 1 && ( permitType == "Special Event" || permitType == "Park & Ride")) {
+                            if (resultSet.getInt("PermitCount") == 1 && (Objects.equals(permitType, "Special Event") || Objects.equals(permitType, "Park & Ride"))) {
                                 System.out.println("Permits within allowed limit .... ✓");
                                 return true;
                             }

@@ -829,7 +829,7 @@ public class VehiclePermit {
             PreparedStatement stmt = conn.prepareStatement(driverStatusSql);
             stmt.setString(1, DriverID);
             ResultSet resultSet = stmt.executeQuery();
-            String[] employees = new String[]{"A", " B", "C", "D"};
+            String[] employees = new String[]{"A", "B", "C", "D"};
             String[] students = new String[]{"AS", "BS", "CS", "DS"};
             String[] visitors = new String[]{"V"};
             if (resultSet.next()) {

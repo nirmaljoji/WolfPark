@@ -326,7 +326,7 @@ public class InformationProcessing {
                 preparedStatement.setString(4, spaceType);     // Assuming spaceType is a String
 
                 int result = preparedStatement.executeUpdate();
-                System.out.println("Space information created successfully");
+                System.out.println("Space  created successfully");
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());

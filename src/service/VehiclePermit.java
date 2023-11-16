@@ -380,6 +380,7 @@ public class VehiclePermit {
                 System.out.println("1.Use today's date");
                 System.out.println("2.Enter custom date");
                 final int choice = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:

@@ -296,8 +296,8 @@ public class VehiclePermit {
             final String permitID = scanner.nextLine();
 
 
-            String vehicleCategory = "Select PLName, ZoneID, SpaceNo FROM PermitLocation WHERE PermitID = ?;";
-            PreparedStatement stmt = conn.prepareStatement(vehicleCategory);
+            String permitExists = "Select PLName, ZoneID, SpaceNo FROM PermitLocation WHERE PermitID = ?;";
+            PreparedStatement stmt = conn.prepareStatement(permitExists);
             stmt.setString(1, permitID);
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {

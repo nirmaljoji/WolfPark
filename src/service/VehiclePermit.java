@@ -247,11 +247,14 @@ public class VehiclePermit {
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, licenseNo);
                         stmt.setString(2, licenceNo_old);
-                        stmt.executeUpdate();
+                        int check = stmt.executeUpdate();
+                        if(check == 1 ){
+                            System.out.println("Updated Successfully!");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
                         stmt.close();
-                        System.out.println("Updated Successfully!");
                         break;
-
                     case 2:
                         System.out.print("Enter new Driver ID: ");
                         String driverID = scanner.nextLine();
@@ -261,7 +264,12 @@ public class VehiclePermit {
                         stmt.setString(2, licenceNo_old);
                         stmt.executeUpdate();
                         stmt.close();
-                        System.out.println("Updated Successfully!");
+                        int check2 = stmt.executeUpdate();
+                        if(check2 == 1 ){
+                            System.out.println("Updated Successfully!");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
                         break;
 
                     case 3:
@@ -274,9 +282,13 @@ public class VehiclePermit {
                         stmt.setString(1, model);
                         stmt.setString(2, manufacturer);
                         stmt.setString(3, licenceNo_old);
-                        stmt.executeUpdate();
+                        int check3 = stmt.executeUpdate();
+                        if(check3 == 1){
+                            System.out.println("Updated Successfully!");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
                         stmt.close();
-                        System.out.println("Updated Successfully!");
                         break;
                     case 4:
                         System.out.print("Enter new Color: ");
@@ -286,19 +298,29 @@ public class VehiclePermit {
                         stmt.setString(1, color);
                         stmt.setString(2, licenceNo_old);
                         stmt.executeUpdate();
+                        int check4 = stmt.executeUpdate();
+                        if(check4 == 1){
+                            System.out.println("Updated Successfully!");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
                         stmt.close();
-                        System.out.println("Updated Successfully!");
                         break;
                     case 5:
                         System.out.print("Enter new Year (YYYY): ");
                         String year = scanner.nextLine();
-                        sql = "UPDATE Vehicle SET Year = year WHERE LicenseNo = ?;";
+                        sql = "UPDATE Vehicle SET Year =  ? WHERE LicenseNo = ?;";
                         stmt = conn.prepareStatement(sql);
                         stmt.setString(1, year);
                         stmt.setString(2, licenceNo_old);
                         stmt.executeUpdate();
+                        int check5 = stmt.executeUpdate();
+                        if(check5 == 1){
+                            System.out.println("Updated Successfully!");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
                         stmt.close();
-                        System.out.println("Updated Successfully!");
                         break;
 
                     case 6:
@@ -317,16 +339,19 @@ public class VehiclePermit {
                             stmt.setString(1, category);
                             stmt.setString(2, licenceNo_old);
                             stmt.executeUpdate();
+                            int check6 = stmt.executeUpdate();
+                            if(check6 == 1){
+                                System.out.println("Updated Successfully!");
+                            }else{
+                                System.out.println("Please enter valid information");
+                            }
                             stmt.close();
-                            System.out.println("Updated Successfully!");
                         }
                         break;
                     case 7: return;
                      default: System.out.println("Please Enter a valid choice");
                      break;
                 }
-
-
 
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -11,12 +11,13 @@ public class GenerateReports {
     Scanner scanner = new Scanner(System.in);
     ResultSetService resultSetService = new ResultSetService();
 
-
+    // Method to handle report generation process
     public void run(Connection conn){
 
         try{
 
             while (true){
+                // Displaying options for various reports
                 System.out.println("\nGENERATE REPORTS:");
                 System.out.println("1. Get total number of citations");
                 System.out.println("2. Get total number of citations per lot");
@@ -31,6 +32,7 @@ public class GenerateReports {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
+                // Handling user's choice by calling corresponding methods
                 switch (choice) {
                     case 1:
                         /* Call Method to get Total Citations */

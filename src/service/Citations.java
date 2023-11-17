@@ -409,7 +409,10 @@ public class Citations {
                         return false;
                     }
                 }
+            } else if (payCitationInput.equals("no")) {
+                return false;
             } else {
+                System.out.println("Enter valid input");
                 return false;
             }
         } catch (Exception ex) {

@@ -238,7 +238,7 @@ public class InformationProcessing {
         try {
             System.out.println("Enter the Parking Lot Information to be Updated: ");
             String parkingLotName = sc.nextLine();
-            System.out.print("Choose the Information you want to update");
+            System.out.print("Choose the Information you want to update\n");
             System.out.println("1. Parking Lot Name: ");
             System.out.println("2. Address: ");
             String pick = sc.nextLine();
@@ -372,7 +372,7 @@ public class InformationProcessing {
             String zoneId = sc.nextLine();
             System.out.println("Enter the space number : ");
             String spaceNumber = sc.nextLine();
-            System.out.println("Enter the space type : ");
+            System.out.println("Enter the space type (Electric, Compact Car, Regular, Handicap): ");
             String spaceType = sc.nextLine();
             String query = "INSERT INTO Space (PLName, ZoneID, SpaceNo, SpaceType) VALUES (?, ?, ?, ?);";
 
@@ -384,13 +384,13 @@ public class InformationProcessing {
 
                 int result = preparedStatement.executeUpdate();
                 System.out.println("Space  created successfully");
-                String query2 = "INSERT INTO ParkingLocation (PLName, ZoneID, SpaceNo, SpaceType, StaffID, Availability Status) VALUES  (?,?,?,?,?,?);";
+                String query2 = "INSERT INTO ParkingLocation (PLName, ZoneID, SpaceNo, StaffID, AvailabilityStatus) VALUES  (?,?,?,?,?);";
                 try (PreparedStatement preparedStatement1 = conn.prepareStatement(query2)) {
                     preparedStatement1.setString(1, parkingLotName);
                     preparedStatement1.setString(2, zoneId);
                     preparedStatement1.setString(3, spaceNumber);
-                    preparedStatement1.setString(4, spaceType);
-                    preparedStatement1.setString(5, "1");
+                    preparedStatement1.setString(4, "1");
+                    preparedStatement1.setBoolean(5, true);
                     int result_reflect = preparedStatement1.executeUpdate();
                 }
             }

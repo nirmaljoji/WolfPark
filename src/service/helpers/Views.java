@@ -20,7 +20,7 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 // Displaying admin options.
-                System.out.println("\n🌟🌟 ADMIN VIEW 🌟🌟");
+                System.out.println("\n\n🌟🌟 ADMIN VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Information Processing");
                 System.out.println("2. Maintain Permit and Vehicle Information");
@@ -91,7 +91,7 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 // Displaying security options
-                System.out.println("\n🌟🌟 SECURITY VIEW 🌟🌟");
+                System.out.println("\n\n🌟🌟 SECURITY VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Generate and Maintain Citations");
                 System.out.println("2. Generate Reports");
@@ -158,7 +158,7 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 // Displaying driver options.
-                System.out.println("\n🌟🌟 DRIVER VIEW 🌟🌟");
+                System.out.println("\n\n🌟🌟 DRIVER VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. View Driver Information");
                 System.out.println("2. View Vehicles");

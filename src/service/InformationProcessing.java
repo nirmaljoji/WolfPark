@@ -258,6 +258,7 @@ public class InformationProcessing {
                         System.out.println("Exception:" + ex.getMessage());
                     }
                 }
+                break;
                 case ("2"): {
                     System.out.println("Enter new Address : ");
                     String address = sc.nextLine();
@@ -278,8 +279,10 @@ public class InformationProcessing {
                         System.out.println("Exception:" + ex.getMessage());
                     }
                 }
+                break;
                 default:
                     System.out.println("Enter a valid choice.");
+                    break;
             }
 
         } catch (Exception ex) {
@@ -301,6 +304,7 @@ public class InformationProcessing {
                 if (result == 0) {
                     System.out.println("Please Enter Valid Information");
                 } else {
+
                     System.out.println("Parking Lot deleted Successfully ");
                 }
             }

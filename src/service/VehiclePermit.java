@@ -513,7 +513,7 @@ public class VehiclePermit {
             scanner.nextLine();
             final int StaffID = 1;
 
-            System.out.print("Enter the permit type: ");
+            System.out.print("Enter the permit type (Residential, Commuter, Peak Hours, Special Event, Park & Ride): ");
             final String permitType = scanner.nextLine();
 
 
@@ -746,7 +746,7 @@ public class VehiclePermit {
                     stmt.close();
                     break;
                 case 5:
-                    System.out.print("Enter new Permit Type:  ");
+                    System.out.print("Enter new Permit Type (Residential, Commuter, Peak Hours, Special Event, Park & Ride):  ");
                     String permitType = scanner.nextLine();
                     if(updatePermitType(conn, permitType, permitID)){
                         sql = "UPDATE Permit SET PermitType = ? WHERE PermitID = ?;";

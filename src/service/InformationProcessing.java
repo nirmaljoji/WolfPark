@@ -437,9 +437,9 @@ public class InformationProcessing {
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name: ");
             String parkingLotName = sc.nextLine();
-            System.out.println("Enter the Zone ID: ");
+            System.out.print("Enter the Zone ID: ");
             String zoneId = sc.nextLine();
-            System.out.println("Enter the space number: ");
+            System.out.print("Enter the space number: ");
             String spaceNumber = sc.nextLine();
 
             String selectQuery = "SELECT AvailabilityStatus from ParkingLocation WHERE PLName = ? AND ZoneID =? AND SpaceNo = ?;";
@@ -455,24 +455,55 @@ public class InformationProcessing {
                 }
                 resultSet.next();
                 if (resultSet.getBoolean("AvailabilityStatus")) {
-                    System.out.println("Enter the new space type (Regular, Handicap, Electric, Compact Car): ");
-                    String spaceType = sc.nextLine();
-                    String query = "UPDATE Space SET SpaceType= ? WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
-                    try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                        preparedStatement.setString(1, spaceType);
-                        preparedStatement.setString(2, parkingLotName);
-                        preparedStatement.setString(3, zoneId);
-                        preparedStatement.setString(4, spaceNumber);
-                        preparedStatement.executeUpdate();
-                        int result = preparedStatement.executeUpdate();
-                        if (result == 0) {
-                            System.out.println("Please Enter a Valid SpaceType.");
-                        } else {
-                            System.out.println("Space information Updated Successfully.");
-                        }
-                    } catch (Exception ex) {
-                        System.out.println("Exception:" + ex.getMessage());
+
+                    System.out.println("Choose the information you want to update:");
+                    System.out.println("1. Space No:");
+                    System.out.println("2. Space Type:");
+                    int choice = sc.nextInt();
+                    sc.nextLine();
+                    switch (choice){
+                        case 1: System.out.print("Enter the new Space No : ");
+                                int space = sc.nextInt();
+                                sc.nextLine();
+                            String query = "UPDATE Space SET SpaceNo= ? WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
+                            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                                preparedStatement.setInt(1, space);
+                                preparedStatement.setString(2, parkingLotName);
+                                preparedStatement.setString(3, zoneId);
+                                preparedStatement.setString(4, spaceNumber);
+                                int result = preparedStatement.executeUpdate();
+                                if (result == 0) {
+                                    System.out.println("Please Enter a Valid Space No.");
+                                } else {
+                                    System.out.println("Space information Updated Successfully.");
+                                }
+                            } catch (Exception ex) {
+                                System.out.println("Exception:" + ex.getMessage());
+                            }
+                            break;
+                        case 2:
+                            System.out.print("Enter the new space type (Regular, Handicap, Electric, Compact Car): ");
+                            String spaceType = sc.nextLine();
+                            String query2 = "UPDATE Space SET SpaceType= ? WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
+                            try (PreparedStatement preparedStatement = conn.prepareStatement(query2)) {
+                                preparedStatement.setString(1, spaceType);
+                                preparedStatement.setString(2, parkingLotName);
+                                preparedStatement.setString(3, zoneId);
+                                preparedStatement.setString(4, spaceNumber);
+                                preparedStatement.executeUpdate();
+                                int result = preparedStatement.executeUpdate();
+                                if (result == 0) {
+                                    System.out.println("Please Enter a Valid SpaceType.");
+                                } else {
+                                    System.out.println("Space information Updated Successfully.");
+                                }
+                            } catch (Exception ex) {
+                                System.out.println("Exception:" + ex.getMessage());
+                            }
+                            break;
+                        default: System.out.println("Please enter valid information");
                     }
+
                 } else {
                     System.out.println("You can not update the space type for a space which has a permit.");
                 }

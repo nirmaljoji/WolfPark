@@ -183,7 +183,7 @@ public class GenerateReports {
                 System.out.println("Enter Parking Lot:");
                 final String parkingLot = scanner.nextLine();
 
-                System.out.println("Enter Zone ID (A,B,C,D):");
+                System.out.println("Enter Zone ID (A,B,C,D,AS,BS,CS,DS,V):");
                 final String zoneID = scanner.nextLine();
 
                 final String sqlQuery = "SELECT COUNT(D.DriverID) AS EmployessWithPermits FROM PermitLocation PL INNER JOIN Permit P ON PL.PermitID = P.PermitID INNER JOIN Vehicle V ON V.LicenseNo = P.LicenseNo  INNER JOIN Driver D ON V.DriverID = D.DriverID WHERE PL.PLName = ? AND PL.ZoneID = ? AND D.Status = 'E';";
@@ -198,7 +198,7 @@ public class GenerateReports {
                 System.out.println("Employee Zones in the database:");
                 resultSetService.runQueryAndPrintOutput2(conn, "SELECT * from Zone WHERE ZoneID IN ('A','B','C','D');");
 
-                System.out.println("Enter Zone ID (A,B,C,D):");
+                System.out.println("Enter Zone ID (A,B,C,D,AS,BS,CS,DS,V):");
                 final String zoneID = scanner.nextLine();
 
                 final String sqlQuery = "SELECT COUNT(D.DriverID) AS EmployessWithPermits FROM PermitLocation PL INNER JOIN Permit P ON PL.PermitID = P.PermitID INNER JOIN Vehicle V ON V.LicenseNo = P.LicenseNo  INNER JOIN Driver D ON V.DriverID = D.DriverID WHERE PL.ZoneID = ? AND D.Status = 'E';";

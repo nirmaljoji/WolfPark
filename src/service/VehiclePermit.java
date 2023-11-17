@@ -426,7 +426,7 @@ public class VehiclePermit {
 
     }
 
-    private void deletePermit(Connection conn) {
+    public void deletePermit(Connection conn) {
         try {
             System.out.print("(DELETE) Enter permit ID : ");
             final String permitID = scanner.nextLine();
@@ -644,7 +644,7 @@ public class VehiclePermit {
         return false;
     }
 
-    private void updatePermit(Connection conn) {
+    public void updatePermit(Connection conn) {
         try {
 
             System.out.print("Enter permit ID to be updated: ");

@@ -11,6 +11,9 @@ public class InformationProcessing {
 
     /* Display list of operations for user to select */
     public void run(Connection conn) {
+
+        VehiclePermit vp = new VehiclePermit();
+        Citations c = new Citations();
         try {
             while (true) {
                 System.out.println("\nINFORMATION PROCESSING:");
@@ -59,7 +62,6 @@ public class InformationProcessing {
                     case 7:
                         enterZoneInformation(conn);
                         break;
-
                     case 8:
                         deleteZoneInformation(conn);
                         break;
@@ -73,21 +75,21 @@ public class InformationProcessing {
                         deleteSpaceInformation(conn);
                         break;
                     case 12:
-                        //enterPermitInformation(conn);
+                        vp.createPermit(conn);
                         break;
                     case 13:
-                        //updatePermitInformation(conn);
+                        vp.updatePermit(conn);
                         break;
                     case 14:
-                        //deletePermitInformation(conn);
+                        vp.deletePermit(conn);
+                        break;
+                    case 15:
+                        c.appealCitation(conn);
+                        break;
+                    case 16:
+                        c.payCitationFee(conn);
                         break;
                     case 17:
-                        //applyCitation(conn);
-                        break;
-                    case 18:
-                        //payCitationFees(conn);
-                        break;
-                    case 19:
                         return;
                     default:
                         System.out.println("Invalid Input");
@@ -131,15 +133,15 @@ public class InformationProcessing {
     /* Method to Update Information of an entry in the Driver table*/
     public void updateDriverInformation(Connection conn) {
         try {
-            System.out.println("Enter Driver ID :  ");
+            System.out.println("Enter Driver ID : ");
             String olddriverId = sc.nextLine();
-            System.out.println("Which Information do you want to update?");
+            System.out.println("Choose the Information you want to update");
             System.out.print("1. Driver ID");
-            System.out.println("2. Driver name  ");
+            System.out.println("2. Driver name");
             String pick = sc.nextLine();
             switch (pick) {
                 case ("1"): {
-                    System.out.println("Enter new Driver ID : ");
+                    System.out.println("Enter new Driver ID: ");
                     String newdriverId = sc.nextLine();
                     String query = "UPDATE Driver SET DriverID = ? WHERE DriverID = ?;";
                     try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
@@ -172,14 +174,14 @@ public class InformationProcessing {
                         System.out.println("Exception:" + ex.getMessage());
                     }
                 }
-             default:
-                       System.out.println("Enter a valid choice.");
-                }
-                      } catch(Exception ex){
-                System.out.println("Exception:" + ex.getMessage());
-
+                default:
+                    System.out.println("Enter a valid choice.");
             }
+        } catch (Exception ex) {
+            System.out.println("Exception:" + ex.getMessage());
+
         }
+    }
 
     /* Method to delete an entry from the Driver table*/
     public void deleteDriverInformation(Connection conn) {
@@ -231,12 +233,11 @@ public class InformationProcessing {
     /* Method to update an entry in the Parking Lot table*/
     public void updateParkingLotInformation(Connection conn) { //cascade
         try {
-            System.out.println("Enter the Parking Lot Information to be Updated.");
-            System.out.print("Enter the parking lot name : ");
+            System.out.println("Enter the Parking Lot Information to be Updated: ");
             String parkingLotName = sc.nextLine();
-            System.out.print("Which information do you want to update? Enter your choice.");
-            System.out.println("1. Parking Lot Name.");
-            System.out.println("2. Address");
+            System.out.print("Choose the Information you want to update");
+            System.out.println("1. Parking Lot Name: ");
+            System.out.println("2. Address: ");
             String pick = sc.nextLine();
 
             switch (pick) {
@@ -248,7 +249,6 @@ public class InformationProcessing {
                     try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                         preparedStatement.setString(1, newplName);
                         preparedStatement.setString(2, parkingLotName);
-
                         preparedStatement.executeUpdate();
                         System.out.println("Driver ID is successfully update.");
                     } catch (Exception ex) {
@@ -387,85 +387,86 @@ public class InformationProcessing {
                     int result_reflect = preparedStatement1.executeUpdate();
                 }
             }
-            } catch (Exception ex) {
-                System.out.println("Exception:" + ex.getMessage());
-            }
+        } catch (Exception ex) {
+            System.out.println("Exception:" + ex.getMessage());
+        }
 
     }
-        /* Method to update an entry in the  Space table*/
-     public void updateSpaceInformation (Connection conn){
-                try {
-                    System.out.println("Enter the Parking Lot Information.");
-                    System.out.print("Enter the parking lot name : ");
-                    String parkingLotName = sc.nextLine();
-                    System.out.println("Enter the Zone ID : ");
-                    String zoneId = sc.nextLine();
-                    System.out.println("Enter the space number : ");
-                    String spaceNumber = sc.nextLine();
 
-                    String selectQuery = "SELECT Availabilty from ParkingLocation WHERE ParkingLotName = ? , ZoneID =? , SpaceNumber = ?;";
-                    try(PreparedStatement stmt1 = conn.prepareStatement(selectQuery);){
-                    stmt1.setString(1, parkingLotName);
-                    stmt1.setString(2, zoneId);
-                    stmt1.setString(3,spaceNumber);
-                    ResultSet resultSet = stmt1.executeQuery();
-                    if (resultSet.next() == true){
-                        System.out.println("Enter the new space type : ");
-                        String spaceType = sc.nextLine();
-                        String query = "UPDATE Space SET SpaceType= ? WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
-                            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                                preparedStatement.setString(1, spaceType);
-                                preparedStatement.setString(2, parkingLotName);
-                                preparedStatement.setString(3, zoneId);
-                                preparedStatement.setString(4, spaceNumber);
-                                preparedStatement.executeUpdate();
-                                int result = preparedStatement.executeUpdate();
-                                if (result == 0) {
-                                    System.out.println("Please Enter a Valid SpaceType.");
-                                } else {
-                                    System.out.println("Space information Updated Successfully.");
-                                }
-                            } catch (Exception ex) {
-                                System.out.println("Exception:" + ex.getMessage());
-                            }
-                        }
-                    else{
-                        System.out.println("You can not assign a space type for a space for which permit has already been assigned.");
-                    }
-                    }
+    /* Method to update an entry in the  Space table*/
+    public void updateSpaceInformation(Connection conn) {
+        try {
+            System.out.println("Enter the Parking Lot Information.");
+            System.out.print("Enter the parking lot name : ");
+            String parkingLotName = sc.nextLine();
+            System.out.println("Enter the Zone ID : ");
+            String zoneId = sc.nextLine();
+            System.out.println("Enter the space number : ");
+            String spaceNumber = sc.nextLine();
 
-                } catch (Exception ex) {
-                    System.out.println("Exception:" + ex.getMessage());
-                }
-            }
-
-            /* Method to delete an entry in the  Zone table*/
-    public void deleteSpaceInformation (Connection conn){
-                try {
-                    System.out.print("Enter the Parking Lot Information.");
-                    System.out.print("Enter the parking lot name : ");
-                    String parkingLotName = sc.nextLine();
-                    System.out.println("Enter the Zone ID : ");
-                    String zoneId = sc.nextLine();
-                    System.out.print("Enter the space number : ");
-                    String spaceNumber = sc.nextLine();
-                    String query = "DELETE FROM Space WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
+            String selectQuery = "SELECT AvailabilityStatus from ParkingLocation WHERE PLName = ? AND ZoneID =? AND SpaceNo = ?;";
+            try (PreparedStatement stmt1 = conn.prepareStatement(selectQuery)) {
+                stmt1.setString(1, parkingLotName);
+                stmt1.setString(2, zoneId);
+                stmt1.setString(3, spaceNumber);
+                ResultSet resultSet = stmt1.executeQuery();
+                resultSet.next();
+                if (resultSet.getBoolean("AvailabilityStatus")) {
+                    System.out.println("Enter the new space type : ");
+                    String spaceType = sc.nextLine();
+                    String query = "UPDATE Space SET SpaceType= ? WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
                     try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                        preparedStatement.setString(1, parkingLotName); // Assuming parkingLotName is a String
-                        preparedStatement.setString(2, zoneId);        // Assuming zoneId is a String
-                        preparedStatement.setString(3, spaceNumber);      // Assuming spaceNumber is an Integer
-
+                        preparedStatement.setString(1, spaceType);
+                        preparedStatement.setString(2, parkingLotName);
+                        preparedStatement.setString(3, zoneId);
+                        preparedStatement.setString(4, spaceNumber);
+                        preparedStatement.executeUpdate();
                         int result = preparedStatement.executeUpdate();
                         if (result == 0) {
-                            System.out.println("Please Enter Valid Information");
+                            System.out.println("Please Enter a Valid SpaceType.");
                         } else {
-                            System.out.println("Space information deleted successfully");
+                            System.out.println("Space information Updated Successfully.");
                         }
+                    } catch (Exception ex) {
+                        System.out.println("Exception:" + ex.getMessage());
                     }
-                } catch (Exception ex) {
-                    System.out.println("Exception:" + ex.getMessage());
-
+                } else {
+                    System.out.println("You can not assign a space type for a space for which permit has already been assigned.");
                 }
             }
 
+        } catch (Exception ex) {
+            System.out.println("Exception:" + ex.getMessage());
         }
+    }
+
+    /* Method to delete an entry in the  Zone table*/
+    public void deleteSpaceInformation(Connection conn) {
+        try {
+            System.out.print("Enter the Parking Lot Information.");
+            System.out.print("Enter the parking lot name : ");
+            String parkingLotName = sc.nextLine();
+            System.out.println("Enter the Zone ID : ");
+            String zoneId = sc.nextLine();
+            System.out.print("Enter the space number : ");
+            String spaceNumber = sc.nextLine();
+            String query = "DELETE FROM Space WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, parkingLotName); // Assuming parkingLotName is a String
+                preparedStatement.setString(2, zoneId);        // Assuming zoneId is a String
+                preparedStatement.setString(3, spaceNumber);      // Assuming spaceNumber is an Integer
+
+                int result = preparedStatement.executeUpdate();
+                if (result == 0) {
+                    System.out.println("Please Enter Valid Information");
+                } else {
+                    System.out.println("Space information deleted successfully");
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Exception:" + ex.getMessage());
+
+        }
+    }
+
+}

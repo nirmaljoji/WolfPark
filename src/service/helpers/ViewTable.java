@@ -80,7 +80,7 @@ public class ViewTable {
                         System.out.println("Invalid Input");
                 }
                 if (choice == 14) {
-                    break; // Exit the loop if the user selects to return to the main menu.
+                    break;
                 }
             }
         } catch (Exception ex) {

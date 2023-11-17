@@ -187,7 +187,7 @@ public class Views {
 
                     case 2:
                         System.out.println("Enter Driver ID:");
-                        String driverId2 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+                        String driverId2 = scanner.next();
 
                         // Execute SQL query to view vehicles for the given driver
                         resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Vehicle " +
@@ -197,7 +197,7 @@ public class Views {
 
                     case 3:
                         System.out.println("Enter Driver ID:");
-                        String driverId3 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+                        String driverId3 = scanner.next();
 
                         // Execute SQL query to view permits for the given driver
                         resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Permit " +
@@ -206,7 +206,7 @@ public class Views {
 
                     case 4:
                         System.out.println("Enter Driver ID:");
-                        String driverId4 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+                        String driverId4 = scanner.next();
 
                         // Execute SQL query to view citations for the given driver
                         resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Citation " +

@@ -50,11 +50,6 @@ public class PrepareTable {
 
                 stmt.executeBatch();
                 System.out.print("All required tables created.....");
-//                while (rs.next()) {
-//                    String s = rs.getString("COF_NAME");
-//                    float n = rs.getFloat("PRICE");
-//                    System.out.println(s + "  " + n);
-//                }
 
             } finally {
                 System.out.print("All required tables created.....");
@@ -74,7 +69,7 @@ public class PrepareTable {
 
                 stmt = conn.createStatement();
 
-                // Adding INSERT statements to the batch for initial data population.
+                // Adding INSERT statements to the batch for initial data population using given demo data
                 stmt.addBatch("INSERT INTO Staff (StaffID, Role) VALUES (1, 'Admin'), (2, 'Security');");
                 stmt.addBatch("INSERT INTO Driver (DriverID, DriverName, Status) VALUES ('7729119111', 'Sam BankmanFried', 'V'), ('266399121', 'John Clay', 'E'), ('366399121','Julia Hicks', 'E'), ('466399121', 'Ivan Garcia', 'E'), ('122765234', 'Sachin Tendulkar','S'), ('9194789124', 'Charles Xavier', 'V'), ('9999999999', 'Joji', 'V');");
                 stmt.addBatch("INSERT INTO ParkingLot (PLName, StaffID, Address) VALUES ('Poulton Deck', 1, '1021 Main Campus Dr Raleigh, NC, 27606'), ('Partners Way Deck', 1, '851 Partners Way Raleigh, NC, 27606'), ('Dan Allen Parking Deck', 1, '110 Dan Allen Dr Raleigh, NC, 27607');");

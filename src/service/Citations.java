@@ -5,18 +5,16 @@ import service.helpers.ResultSetService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Scanner;
 
 public class Citations {
     Scanner scanner = new Scanner(System.in);
     ResultSetService resultSetService = new ResultSetService();
 
-
+    // Method to generate and maintain citations
     public void run(Connection conn) {
 
         try {
@@ -64,6 +62,7 @@ public class Citations {
 
     }
 
+    //Method to check the validity of a Permit for a given Vehicle
     private boolean checkVehiclePermitValidity(Connection conn) {
         try {
             Scanner scanner = new Scanner(System.in);
@@ -169,6 +168,7 @@ public class Citations {
         }
     }
 
+    //Method to generate a Citation for any vehicle with a parking violation
     private boolean generateCitation(Connection conn, String licenseNo, String plName, String citationName) {
         try {
             System.out.println("Enter CitationNo:");
@@ -223,6 +223,7 @@ public class Citations {
         }
     }
 
+    //Method to create a new citation for any given vehicle
     private boolean generateCitationfromScratch(Connection conn) {
         try {
             final int StaffID = 2;
@@ -281,6 +282,7 @@ public class Citations {
         return true;
     }
 
+    //Method to allow an user to Appeal a Citation - in DRIVER'S VIEW
     public boolean appealCitation(Connection conn) {
         try {
             System.out.println("Enter the Driver ID:");
@@ -342,6 +344,7 @@ public class Citations {
         return true;
     }
 
+    //Method to allow the user to Pay the CitationFee for a given Citation - IN DRIVER'S VIEW
     public boolean payCitationFee(Connection conn) {
         try {
             System.out.println("Enter the Driver ID:");
@@ -357,13 +360,13 @@ public class Citations {
 
             ResultSet citationResult = citationStatement.executeQuery();
 
-            // Check if there are no unpaid citations
+            // Check if there are no citations
             if (!citationResult.next()) {
                 System.out.println("No citations found.");
                 return false;
             }
 
-            // Display the unpaid citations
+            // Display the citations
             citationResult.beforeFirst(); // Move the cursor back to the beginning
             resultSetService.viewFromResultSet(citationResult);
 
@@ -409,7 +412,10 @@ public class Citations {
                         return false;
                     }
                 }
+            } else if (payCitationInput.equals("no")) {
+                return false;
             } else {
+                System.out.println("Enter valid input");
                 return false;
             }
         } catch (Exception ex) {
@@ -419,6 +425,7 @@ public class Citations {
         return true;
     }
 
+    //Method to update Citation relation Information
     private boolean updateCitation(Connection conn) {
         try {
             System.out.println("Citations in the database:");
@@ -494,6 +501,7 @@ public class Citations {
         return true;
     }
 
+    //Method to allow a security to approve or reject an appeal
     private boolean handleAppeal(Connection conn) {
         try {
             // Check if there is data in the Appeals table
@@ -574,6 +582,7 @@ public class Citations {
         return true;
     }
 
+    //Method to delete an existing citation
     public boolean deleteCitation(Connection conn) {
         try {
             System.out.println("Citations in the database:");

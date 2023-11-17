@@ -31,7 +31,7 @@ public class Main {
 
                 while(true){
                     // Displaying options for different user roles and functionalities
-                    System.out.println("\n🌟🌟 Landing Page 🌟🌟");
+                    System.out.println("\n\n🌟🌟 Landing Page 🌟🌟");
                     System.out.println("\nPlease choose the user you want to login as:");
                     System.out.println("1. Admin");
                     System.out.println("2. Security");

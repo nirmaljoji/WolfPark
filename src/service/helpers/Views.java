@@ -20,7 +20,7 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 // Displaying admin options.
-                System.out.println("\n🌟🌟 ADMIN VIEW 🌟🌟");
+                System.out.println("\n\n🌟🌟 ADMIN VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Information Processing");
                 System.out.println("2. Maintain Permit and Vehicle Information");
@@ -91,7 +91,7 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 // Displaying security options
-                System.out.println("\n🌟🌟 SECURITY VIEW 🌟🌟");
+                System.out.println("\n\n🌟🌟 SECURITY VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Generate and Maintain Citations");
                 System.out.println("2. Generate Reports");
@@ -158,7 +158,7 @@ public class Views {
             Scanner scanner = new Scanner(System.in);
             while (true) {
                 // Displaying driver options.
-                System.out.println("\n🌟🌟 DRIVER VIEW 🌟🌟");
+                System.out.println("\n\n🌟🌟 DRIVER VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. View Driver Information");
                 System.out.println("2. View Vehicles");
@@ -187,7 +187,7 @@ public class Views {
 
                     case 2:
                         System.out.println("Enter Driver ID:");
-                        String driverId2 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+                        String driverId2 = scanner.next();
 
                         // Execute SQL query to view vehicles for the given driver
                         resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Vehicle " +
@@ -197,7 +197,7 @@ public class Views {
 
                     case 3:
                         System.out.println("Enter Driver ID:");
-                        String driverId3 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+                        String driverId3 = scanner.next();
 
                         // Execute SQL query to view permits for the given driver
                         resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Permit " +
@@ -206,7 +206,7 @@ public class Views {
 
                     case 4:
                         System.out.println("Enter Driver ID:");
-                        String driverId4 = scanner.next(); // Assuming Driver ID is a string, modify as needed
+                        String driverId4 = scanner.next();
 
                         // Execute SQL query to view citations for the given driver
                         resultSetService.runQueryAndPrintOutput2(connection, "SELECT * FROM Citation " +

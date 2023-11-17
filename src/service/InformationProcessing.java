@@ -17,23 +17,23 @@ public class InformationProcessing {
         try {
             while (true) {
                 System.out.println("\nINFORMATION PROCESSING:");
-                System.out.println("1. Enter Driver Information.");
-                System.out.println("2. Update Driver Information.");
-                System.out.println("3. Delete Driver Information.");
-                System.out.println("4. Enter Parking Lot Information.");
-                System.out.println("5. Update Parking Lot Information.");
-                System.out.println("6. Delete Parking Lot Information.");
-                System.out.println("7. Enter Zone Information.");
-                System.out.println("8. Delete Zone Information.");
-                System.out.println("9. Enter Space Information.");
-                System.out.println("10. Update Space Information.");
-                System.out.println("11. Delete Space Information.");
-                System.out.println("12. Enter Permit Information.");
-                System.out.println("13. Update Permit Information.");
-                System.out.println("14. Delete Permit Information.");
-                System.out.println("15. Appeal Citation.");
-                System.out.println("16. Pay Citation.");
-                System.out.println("17. Return to Main Menu. ");
+                System.out.println("1. Add new Driver");
+                System.out.println("2. Update Driver");
+                System.out.println("3. Delete Driver");
+                System.out.println("4. Create Parking Lot");
+                System.out.println("5. Update Parking Lot");
+                System.out.println("6. Delete Parking Lot");
+                System.out.println("7. Create Zone");
+                System.out.println("8. Delete Zone");
+                System.out.println("9. Create Space");
+                System.out.println("10. Update Space");
+                System.out.println("11. Delete Space");
+                System.out.println("12. Create Permit");
+                System.out.println("13. Update Permit");
+                System.out.println("14. Delete Permit");
+                System.out.println("15. Appeal Citation");
+                System.out.println("16. Pay Citation");
+                System.out.println("17. Return to Main Menu");
 
 
                 System.out.println("Enter your choice: ");
@@ -147,9 +147,12 @@ public class InformationProcessing {
                     try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                         preparedStatement.setString(1, newdriverId);
                         preparedStatement.setString(2, olddriverId);
-
-                        preparedStatement.executeUpdate();
-                        System.out.println("Driver ID is successfully updated");
+                        int result = preparedStatement.executeUpdate();
+                        if(result == 1){
+                            System.out.println("Driver ID is successfully updated");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
                     } catch (Exception ex) {
                         System.out.println("Exception:" + ex.getMessage());
                     }
@@ -252,8 +255,13 @@ public class InformationProcessing {
                     try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
                         preparedStatement.setString(1, newplName);
                         preparedStatement.setString(2, parkingLotName);
-                        preparedStatement.executeUpdate();
-                        System.out.println("Driver ID is successfully update.");
+                        int result = preparedStatement.executeUpdate();
+                        if(result==1){
+                            System.out.println("Parking  is successfully update.");
+                        }else{
+                            System.out.println("Please enter valid information");
+                        }
+
                     } catch (Exception ex) {
                         System.out.println("Exception:" + ex.getMessage());
                     }
@@ -294,20 +302,31 @@ public class InformationProcessing {
     public void deleteParkingLotInformation(Connection conn) { //cascade
         try {
             System.out.println("Enter the Parking Lot Information.");
-            System.out.print("Enter the parking lot name : ");
+            System.out.print("Enter the parking lot name: ");
             String parkingLotName = sc.nextLine().toUpperCase();
-            String query = "DELETE FROM ParkingLot WHERE PLName = ?;";
+
+            conn.setAutoCommit(false);
+            String query = "DELETE p FROM Permit p INNER JOIN PermitLocation on p.PermitID = PermitLocation.PermitID WHERE PermitLocation.PLName = ?;";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(1, parkingLotName); // Assuming parkingLotName is a String
-
-                int result = preparedStatement.executeUpdate();
-                if (result == 0) {
-                    System.out.println("Please Enter Valid Information");
+                preparedStatement.setString(1, parkingLotName);// Assuming parkingLotName is a String
+                preparedStatement.executeUpdate();
+                String query2 = "DELETE FROM ParkingLot WHERE PLName = ?";
+                PreparedStatement stmt = conn.prepareStatement(query2);
+                stmt.setString(1, parkingLotName);
+                int result2 = stmt.executeUpdate();
+                if (result2 == 1) {
+                    conn.commit();
+                    System.out.println("Parking Lot Deleted Successfully");
                 } else {
-
-                    System.out.println("Parking Lot deleted Successfully ");
+                    System.out.println("Please Enter Valid Information");
                 }
+            } catch (Exception ex) {
+                conn.rollback();
+                System.out.println("Transaction rolled back: " + ex.getMessage());
+            } finally {
+                conn.setAutoCommit(true);
             }
+
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
         }
@@ -340,22 +359,34 @@ public class InformationProcessing {
     public void deleteZoneInformation(Connection conn) {
         try {
 
-            System.out.print("Enter the Parking Lot Information.");
-            System.out.print("Enter the parking lot name : ");
+            System.out.println("Enter the Parking Lot Information.");
+            System.out.print("Enter the parking lot name: ");
             String parkingLotName = sc.nextLine();
-            System.out.println("Enter the Zone ID : ");
+            System.out.print("Enter the Zone ID: ");
             String zoneId = sc.nextLine();
-            String query = "DELETE FROM Zone WHERE PLName = ? AND ZoneID = ?;";
-            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(1, parkingLotName);
-                preparedStatement.setString(2, zoneId);
 
-                int result = preparedStatement.executeUpdate();
-                if (result == 0) {
-                    System.out.println("Please Enter Valid Information");
+            conn.setAutoCommit(false);
+            String query = "DELETE p FROM Permit p INNER JOIN PermitLocation on p.PermitID = PermitLocation.PermitID WHERE PermitLocation.PLName = ? AND PermitLocation.ZoneID= ?;";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, parkingLotName);// Assuming parkingLotName is a String
+                preparedStatement.setString(2, zoneId);
+                preparedStatement.executeUpdate();
+                String query2 = "DELETE FROM Zone WHERE PLName = ? AND ZoneID = ?";
+                PreparedStatement stmt = conn.prepareStatement(query2);
+                stmt.setString(1, parkingLotName);
+                stmt.setString(2, zoneId);
+                int result2 = stmt.executeUpdate();
+                if (result2 == 1) {
+                    conn.commit();
+                    System.out.println("Zone Deleted Successfully");
                 } else {
-                    System.out.println("Zone deleted Successfully");
+                    System.out.println("Please Enter Valid Information");
                 }
+            }catch (Exception ex){
+                conn.rollback();
+                System.out.println("Transaction rolled back: "+ ex.getMessage());
+            }finally {
+                conn.setAutoCommit(true);
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -417,6 +448,11 @@ public class InformationProcessing {
                 stmt1.setString(2, zoneId);
                 stmt1.setString(3, spaceNumber);
                 ResultSet resultSet = stmt1.executeQuery();
+                ResultSet resultSet2 = stmt1.executeQuery();
+                if(!resultSet2.next()){
+                    System.out.println("Please enter Valid information.");
+                    return;
+                }
                 resultSet.next();
                 if (resultSet.getBoolean("AvailabilityStatus")) {
                     System.out.println("Enter the new space type : ");
@@ -450,25 +486,38 @@ public class InformationProcessing {
     /* Method to delete an entry in the  Zone table*/
     public void deleteSpaceInformation(Connection conn) {
         try {
-            System.out.print("Enter the Parking Lot Information.");
-            System.out.print("Enter the parking lot name : ");
+            System.out.println("Enter the Parking Lot Information.");
+            System.out.print("Enter the parking lot name: ");
             String parkingLotName = sc.nextLine();
-            System.out.println("Enter the Zone ID : ");
+            System.out.print("Enter the Zone ID : ");
             String zoneId = sc.nextLine();
             System.out.print("Enter the space number : ");
-            String spaceNumber = sc.nextLine();
-            String query = "DELETE FROM Space WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
+            int spaceNumber = sc.nextInt();
+            sc.nextLine();
+            conn.setAutoCommit(false);
+            String query = "DELETE p FROM Permit p INNER JOIN PermitLocation on p.PermitID = PermitLocation.PermitID WHERE PermitLocation.PLName = ? AND PermitLocation.ZoneID= ? AND PermitLocation.SpaceNo = ?;";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
-                preparedStatement.setString(1, parkingLotName); // Assuming parkingLotName is a String
-                preparedStatement.setString(2, zoneId);        // Assuming zoneId is a String
-                preparedStatement.setString(3, spaceNumber);      // Assuming spaceNumber is an Integer
-
-                int result = preparedStatement.executeUpdate();
-                if (result == 0) {
-                    System.out.println("Please Enter Valid Information");
+                preparedStatement.setString(1, parkingLotName);// Assuming parkingLotName is a String
+                preparedStatement.setString(2, zoneId);
+                preparedStatement.setInt(3, spaceNumber);
+                preparedStatement.executeUpdate();
+                String query2 = "DELETE FROM Space WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?";
+                PreparedStatement stmt = conn.prepareStatement(query2);
+                stmt.setString(1, parkingLotName);
+                stmt.setString(2, zoneId);
+                stmt.setInt(3, spaceNumber);
+                int result2 = stmt.executeUpdate();
+                if (result2 == 1) {
+                    conn.commit();
+                    System.out.println("Space Deleted Successfully");
                 } else {
-                    System.out.println("Space information deleted successfully");
+                    System.out.println("Please Enter Valid Information");
                 }
+            } catch (Exception ex) {
+                conn.rollback();
+                System.out.println("Transaction rolled back");
+            } finally {
+                conn.setAutoCommit(true);
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());

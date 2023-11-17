@@ -403,7 +403,7 @@ public class InformationProcessing {
             String zoneId = sc.nextLine();
             System.out.println("Enter the space number : ");
             String spaceNumber = sc.nextLine();
-            System.out.println("Enter the space type : ");
+            System.out.println("Enter the space type (Regular, Handicap, Electric, Compact Car): ");
             String spaceType = sc.nextLine();
             String query = "INSERT INTO Space (PLName, ZoneID, SpaceNo, SpaceType) VALUES (?, ?, ?, ?);";
 
@@ -455,7 +455,7 @@ public class InformationProcessing {
                 }
                 resultSet.next();
                 if (resultSet.getBoolean("AvailabilityStatus")) {
-                    System.out.println("Enter the new space type : ");
+                    System.out.println("Enter the new space type (Regular, Handicap, Electric, Compact Car): ");
                     String spaceType = sc.nextLine();
                     String query = "UPDATE Space SET SpaceType= ? WHERE PLName = ? AND ZoneID = ? AND SpaceNo = ?;";
                     try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {

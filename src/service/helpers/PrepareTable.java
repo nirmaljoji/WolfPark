@@ -19,15 +19,15 @@ public class PrepareTable {
                 stmt.addBatch("DROP TABLE IF EXISTS Staff, Driver, VehicleModelManufacturer, Vehicle, Permit, DriverVehiclePermit, ParkingLot, Zone, Space, PermitLocation, ParkingLocation, CitationCategory, Citation, Appeals;");
                 stmt.addBatch("SET FOREIGN_KEY_CHECKS=1;");
 
-                stmt.addBatch(" CREATE TABLE Staff( StaffID INT PRIMARY KEY, Role VARCHAR(32), CHECK (Role in ('Admin', 'Security')) );");
+                stmt.addBatch(" CREATE TABLE Staff( StaffID INT PRIMARY KEY, Role VARCHAR(32) NOT NULL, CHECK (Role in ('Admin', 'Security')) );");
 
-                stmt.addBatch(" CREATE TABLE Driver ( DriverID VARCHAR(10) PRIMARY KEY, DriverName VARCHAR(255) NOT NULL, Status VARCHAR(1) CHECK (Status IN ('S', 'E', 'V')),CHECK ((Status IN ('S', 'E')) OR (Status = 'V' AND CHAR_LENGTH(DriverID) = 10)));");
+                stmt.addBatch(" CREATE TABLE Driver ( DriverID VARCHAR(10) PRIMARY KEY, DriverName VARCHAR(255) NOT NULL, Status VARCHAR(1) NOT NULL CHECK (Status IN ('S', 'E', 'V')),CHECK ((Status IN ('S', 'E')) OR (Status = 'V' AND CHAR_LENGTH(DriverID) = 10)));");
 
                 stmt.addBatch(" CREATE TABLE VehicleModelManufacturer ( Model VARCHAR(255) PRIMARY KEY, Manufacturer VARCHAR(255) );");
 
-                stmt.addBatch(" CREATE TABLE Vehicle ( LicenseNo VARCHAR(255) PRIMARY KEY, DriverID VARCHAR(10) NOT NULL, Model VARCHAR(255) NOT NULL, Color VARCHAR(255), Year YEAR, VehicleCategory VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (Model) REFERENCES VehicleModelManufacturer(Model) ON UPDATE CASCADE, CHECK (VehicleCategory in ('Electric', 'Handicap', 'Compact car', 'Regular')) );");
+                stmt.addBatch(" CREATE TABLE Vehicle ( LicenseNo VARCHAR(255) PRIMARY KEY, DriverID VARCHAR(10) NOT NULL, Model VARCHAR(255) NOT NULL, Color VARCHAR(255), Year YEAR, VehicleCategory VARCHAR(32) NOT NULL, FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (Model) REFERENCES VehicleModelManufacturer(Model) ON UPDATE CASCADE, CHECK (VehicleCategory in ('Electric', 'Handicap', 'Compact car', 'Regular')) );");
 
-                stmt.addBatch(" CREATE TABLE Permit ( PermitID VARCHAR(10) PRIMARY KEY, StaffID INT NOT NULL, LicenseNo VARCHAR(255) NOT NULL, StartDate DATE NOT NULL, ExpirationDate DATE NOT NULL, ExpirationTime TIME NOT NULL, PermitType VARCHAR(32), FOREIGN KEY (StaffID) REFERENCES Staff(StaffID), FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (PermitType in ('Residential', 'Commuter', 'Peak Hours', 'Special Event', 'Park & Ride')) );");
+                stmt.addBatch(" CREATE TABLE Permit ( PermitID VARCHAR(10) PRIMARY KEY, StaffID INT NOT NULL, LicenseNo VARCHAR(255) NOT NULL, StartDate DATE NOT NULL, ExpirationDate DATE NOT NULL, ExpirationTime TIME NOT NULL, PermitType VARCHAR(32) NOT NULL, FOREIGN KEY (StaffID) REFERENCES Staff(StaffID), FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (PermitType in ('Residential', 'Commuter', 'Peak Hours', 'Special Event', 'Park & Ride')) );");
 
 //                stmt.addBatch(" CREATE TABLE DriverVehiclePermit ( DriverID VARCHAR(10) NOT NULL, LicenseNo VARCHAR(255) NOT NULL, PRIMARY KEY (DriverID, LicenseNo), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE, FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE );");
 
@@ -45,7 +45,7 @@ public class PrepareTable {
 
                 stmt.addBatch( " CREATE TABLE Citation ( CitationNo VARCHAR(10) PRIMARY KEY, CitationDate DATE NOT NULL, CitationTime TIME NOT NULL, PaymentStatus ENUM ('Pending', 'Complete', 'Not Required'), StaffID INT NOT NULL, LicenseNo VARCHAR(255) NOT NULL, PLName VARCHAR(255) NOT NULL, CitationName VARCHAR(32), FOREIGN KEY (CitationName) REFERENCES CitationCategory(CitationName), FOREIGN KEY (StaffID) REFERENCES Staff(StaffID), FOREIGN KEY (LicenseNo) REFERENCES Vehicle(LicenseNo) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (PLName) REFERENCES ParkingLot(PLName) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (CitationName in ('Invalid Permit', 'Expired Permit', 'No Permit', 'Handicap Invalid Permit', 'Handicap Expired Permit', 'Handicap No Permit')));");
 
-                stmt.addBatch( " CREATE TABLE Appeals ( DriverID VARCHAR(10) NOT NULL, CitationNo VARCHAR(10) NOT NULL, AppealStatus VARCHAR(32), FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (CitationNo) REFERENCES Citation(CitationNo) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (AppealStatus in ('Requested', 'Rejected', 'Accepted')) );");
+                stmt.addBatch( " CREATE TABLE Appeals ( DriverID VARCHAR(10) NOT NULL, CitationNo VARCHAR(10) NOT NULL, AppealStatus VARCHAR(32) NOT NULL, FOREIGN KEY (DriverID) REFERENCES Driver(DriverID) ON DELETE CASCADE ON UPDATE CASCADE , FOREIGN KEY (CitationNo) REFERENCES Citation(CitationNo) ON DELETE CASCADE ON UPDATE CASCADE, CHECK (AppealStatus in ('Requested', 'Rejected', 'Accepted')) );");
 
                 stmt.executeBatch();
                 System.out.print("All required tables created.....");

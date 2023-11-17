@@ -131,15 +131,16 @@ public class Citations {
 
                     return false;
                 } else {
-                    // Check if the permit is expired
-                    Date currentDate = new Date();
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String expirationDateStr = permitValidationResult.getString("ExpirationDate");
+                    String esql = "SELECT P.PermitID, P.StartDate, P.ExpirationDate, P.ExpirationTime, NOW() AS CurrentDateTime " +
+                            "FROM Permit P, PermitLocation Pl, Space S " +
+                            "WHERE P.PermitID = Pl.PermitID AND Pl.PLName = S.PLName AND Pl.ZoneID = S.ZoneID AND Pl.SpaceNo = S.SpaceNo " +
+                            "AND CURDATE() <= P.ExpirationDate AND P.LicenseNo = ?";
+                    try (PreparedStatement preparedStatement = conn.prepareStatement(esql)) {
+                        preparedStatement.setString(1, licenseNo); // Replace 'yourLicenseNo' with the actual license number
+                        ResultSet resultSet = preparedStatement.executeQuery();
 
-                    if (expirationDateStr != null) {
-                        Date expirationDate = dateFormat.parse(expirationDateStr);
-
-                        if (currentDate.after(expirationDate)) {
+                        if (!resultSet.next()) {
+                            // The result set is empty, indicating an expired permit
                             System.out.println("Expired permit. Vehicle is not parked correctly.");
 
                             // Prompt user to generate citation
@@ -151,11 +152,12 @@ public class Citations {
                             }
 
                             return false;
+                        } else {
+                            // Permit is valid. Vehicle is parked correctly.
+                            System.out.println("Permit is valid. Vehicle is parked correctly.");
+                            return true;
                         }
                     }
-
-                    System.out.println("Permit is valid. Vehicle is parked correctly.");
-                    return true;
                 }
             }
 

@@ -433,7 +433,7 @@ public class VehiclePermit {
     }
 
     // Method to delete a parking permit.
-    private void deletePermit(Connection conn) {
+    public  void deletePermit(Connection conn) {
         try {
             System.out.print("(DELETE) Enter permit ID : ");
             final String permitID = scanner.nextLine();
@@ -649,7 +649,7 @@ public class VehiclePermit {
     }
 
     // Method to update an existing parking permit.
-    private void updatePermit(Connection conn) {
+    public void updatePermit(Connection conn) {
         try {
 
             System.out.print("Enter permit ID to be updated: ");

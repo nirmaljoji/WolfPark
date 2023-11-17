@@ -136,7 +136,7 @@ public class InformationProcessing {
             System.out.println("Enter Driver ID : ");
             String olddriverId = sc.nextLine();
             System.out.println("Choose the Information you want to update");
-            System.out.print("1. Driver ID");
+            System.out.println("1. Driver ID");
             System.out.println("2. Driver name");
             String pick = sc.nextLine();
             switch (pick) {
@@ -149,11 +149,12 @@ public class InformationProcessing {
                         preparedStatement.setString(2, olddriverId);
 
                         preparedStatement.executeUpdate();
-                        System.out.println("Driver ID is successfully update.");
+                        System.out.println("Driver ID is successfully updated");
                     } catch (Exception ex) {
                         System.out.println("Exception:" + ex.getMessage());
                     }
                 }
+                break;
                 case ("2"): {
                     System.out.println("Enter new Driver Name: ");
                     String newdrivername = sc.nextLine();
@@ -174,8 +175,10 @@ public class InformationProcessing {
                         System.out.println("Exception:" + ex.getMessage());
                     }
                 }
+                break;
                 default:
                     System.out.println("Enter a valid choice.");
+                    break;
             }
         } catch (Exception ex) {
             System.out.println("Exception:" + ex.getMessage());
@@ -312,7 +315,7 @@ public class InformationProcessing {
             System.out.println("Enter the Parking Lot Information.");
             System.out.print("Enter the parking lot name : ");
             String parkingLotName = sc.nextLine();
-            System.out.println("Enter the Zone ID : ");
+            System.out.print("Enter the Zone ID : ");
             String zoneId = sc.nextLine();
             String query = "INSERT INTO Zone (PLName, ZoneID) VALUES (?, ?);";
             try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {

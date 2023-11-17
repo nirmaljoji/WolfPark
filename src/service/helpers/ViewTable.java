@@ -9,9 +9,12 @@ public class ViewTable {
 
     Scanner scanner = new Scanner(System.in);
     ResultSetService resultSetService = new ResultSetService();
+
+    // Method to display and handle table viewing options.
     public void run(Connection conn) {
         try {
             while (true) {
+                // Displaying available tables for viewing.
                 System.out.println("\nTABLES IN THE DATABASE:");
                 System.out.println("1. Appeals");
                 System.out.println("2. Citation");
@@ -77,7 +80,7 @@ public class ViewTable {
                         System.out.println("Invalid Input");
                 }
                 if (choice == 14) {
-                    break;
+                    break; // Exit the loop if the user selects to return to the main menu.
                 }
             }
         } catch (Exception ex) {
@@ -85,12 +88,15 @@ public class ViewTable {
         }
     }
 
+    // Executes a query to select all records from a specified table.
     private void runSelectAllQuery(Connection conn, String tableName) {
         try {
             String selectAllQuery = "SELECT * FROM " + tableName;
+            // Preparing and executing the select all query for the given table.
             try (PreparedStatement selectAllStatement = conn.prepareStatement(selectAllQuery);
                  ResultSet resultSet = selectAllStatement.executeQuery()) {
 
+                // Displaying all records from the specified table using ResultSetService.
                 System.out.println("All records from the " + tableName + " table:");
                 resultSetService.runQueryAndPrintOutput2(conn, selectAllQuery);
             }

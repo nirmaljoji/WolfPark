@@ -95,6 +95,7 @@ public class ResultSetService {
         }
     }
 
+    //Function to run Query and Print the output
     public void runQueryAndPrintOutput2(final Connection connection, final String sqlQuery) {
 
         try {

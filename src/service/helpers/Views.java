@@ -13,11 +13,13 @@ import static java.lang.System.exit;
 public class Views {
     ResultSetService resultSetService = new ResultSetService();
 
+    // Admin interface view with various administrative options.
     public void AdminView(Connection connection) {
 
         try {
             Scanner scanner = new Scanner(System.in);
             while (true) {
+                // Displaying admin options.
                 System.out.println("\n🌟🌟 ADMIN VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Information Processing");
@@ -31,7 +33,7 @@ public class Views {
 
                 System.out.println("Enter your choice: \t");
                 int choice = scanner.nextInt();
-
+                // Switch case to handle various admin functionalities.
                 switch (choice) {
                     case 1:
                         InformationProcessing ip = new InformationProcessing();
@@ -59,9 +61,10 @@ public class Views {
                         break;
 
                     case 6:
-                        return;
+                        return; // Return to the previous menu.
 
                     case 7:
+                        // Exiting the program and closing the connection.
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();
@@ -81,11 +84,13 @@ public class Views {
 
     }
 
+    // Security interface view with options related to citations and reports.
     public void SecurityView(Connection connection) {
 
         try {
             Scanner scanner = new Scanner(System.in);
             while (true) {
+                // Displaying security options
                 System.out.println("\n🌟🌟 SECURITY VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. Generate and Maintain Citations");
@@ -99,6 +104,7 @@ public class Views {
                 System.out.println("Enter your choice: \t");
                 int choice = scanner.nextInt();
 
+                // Switch case for handling security functionalities
                 switch (choice) {
 
                     case 1:
@@ -122,9 +128,10 @@ public class Views {
                         break;
 
                     case 5:
-                        return;
+                        return; // Return to previous menu.
 
                     case 6:
+                        // Exiting the program and closing the connection.
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();
@@ -144,11 +151,13 @@ public class Views {
 
     }
 
+    // Driver interface view with options for viewing and managing driver-specific information.
     public void DriverView(Connection connection) {
 
         try {
             Scanner scanner = new Scanner(System.in);
             while (true) {
+                // Displaying driver options.
                 System.out.println("\n🌟🌟 DRIVER VIEW 🌟🌟");
                 System.out.println("\nChoose one of the following options:");
                 System.out.println("1. View Driver Information");
@@ -166,6 +175,7 @@ public class Views {
                 System.out.println("Enter your choice: \t");
                 int choice = scanner.nextInt();
 
+                // Switch case for handling driver functionalities.
                 switch (choice) {
                     case 1:
                         System.out.println("Enter Driver ID:");
@@ -225,9 +235,10 @@ public class Views {
                         break;
 
                     case 9:
-                        return;
+                        return; // Return to the previous menu
 
                     case 10:
+                        // Exiting the program and closing the connection.
                         System.out.println("Exiting program and closing all connections....");
                         if(connection!=null){
                             connection.close();

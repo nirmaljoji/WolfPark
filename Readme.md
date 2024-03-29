@@ -4,11 +4,45 @@
 This document outlines the design and implementation details for the Wolf Parking Management System, a database system for managing parking lots and users on campus. The system is designed to be used by administrators of the parking services and will maintain information on drivers, parking lots, zones, spaces, permits, vehicles, and citations.
 
 
-##  Team M 
-* Amrita Visalam : avisala
-* Nirmal Sharon Joji : nsjoji
-* Sreenitiya Mandava : smandav
-* Sri Roopa Ramesh Babu : srames25
+<img src="https://github.com/nirmaljoji/WolfPark/assets/40449660/447e0061-cac8-47fd-8076-ead26fabe4cb" width="400" />
+
+
+## System Operations 
+
+
+
+The Wolf Parking Management System will support the following operations:
+
+1. **Information Processing**
+   - Enter/update/delete basic information about drivers, parking lots, zones, spaces, and permits.
+   - Assign zones to each parking lot and a type to a given space.
+   - Process citation appeals and update citation payment status accordingly.
+
+2. **Maintaining Permits and Vehicle Information**
+   - Assign permits to drivers based on their status.
+   - Enter/update permit information and vehicle ownership information.
+   - Remove or add vehicles to permits.
+
+3. **Generating and Maintaining Citations**
+   - Generate/maintain information for each citation.
+   - Detect parking violations by checking if a car has a valid permit in the lot.
+   - Allow drivers to pay or appeal citations.
+
+4. **Reports**
+   - Generate a report for citations.
+   - For each lot, generate a report for the total number of citations in all zones for a given time range.
+   - Return the list of zones for each lot as tuple pairs (lot, zone).
+   - Return the number of cars currently in violation.
+   - Return the number of employees with permits for a given parking zone.
+   - Return permit information given an ID or phone number.
+   - Return an available space number given a space type in a given parking lot.
+
+## Instructions for execution
+
+* Clone the github repository to your local device.
+* In the file , Contstants.java , Enter your unity id and password.
+* Run Main.java to execute the application.
+
 
 ## Database Schema
 
@@ -64,37 +98,3 @@ The database consists  of the following entities:
    - Category
    - Fee ($25, $30, $40 with discounts for handicap users)
    - Payment Status
-
-## System Operations
-
-The Wolf Parking Management System will support the following operations:
-
-1. **Information Processing**
-   - Enter/update/delete basic information about drivers, parking lots, zones, spaces, and permits.
-   - Assign zones to each parking lot and a type to a given space.
-   - Process citation appeals and update citation payment status accordingly.
-
-2. **Maintaining Permits and Vehicle Information**
-   - Assign permits to drivers based on their status.
-   - Enter/update permit information and vehicle ownership information.
-   - Remove or add vehicles to permits.
-
-3. **Generating and Maintaining Citations**
-   - Generate/maintain information for each citation.
-   - Detect parking violations by checking if a car has a valid permit in the lot.
-   - Allow drivers to pay or appeal citations.
-
-4. **Reports**
-   - Generate a report for citations.
-   - For each lot, generate a report for the total number of citations in all zones for a given time range.
-   - Return the list of zones for each lot as tuple pairs (lot, zone).
-   - Return the number of cars currently in violation.
-   - Return the number of employees with permits for a given parking zone.
-   - Return permit information given an ID or phone number.
-   - Return an available space number given a space type in a given parking lot.
-
-## Instructions for exexution
-
-* Clone the github repository to your local device.
-* In the file , Contstants.java , Enter your unity id and password.
-* Run Main.java to execute the application.
